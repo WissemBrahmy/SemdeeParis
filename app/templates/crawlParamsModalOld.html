@@ -1,0 +1,203 @@
+<div class="modal-dialog {{crawlForm.modalType =='twitter'? 'modal-dialog2':''}}" >
+	<div class="modal-content">
+		<form class="form-horizontal" ng-submit="validateParams()">
+			<div class="modal-header">
+				<button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+					<span class="fa fa-close"></span>
+				</button>
+				<h4 class="modal-title text-center" ng-if="crawlForm.modalType == 'google'"  >GOOGLE Parameters</h4>
+				<h4 class="modal-title text-center" ng-if="crawlForm.modalType == 'bing'" >BING Parameters</h4>
+				<h4 class="modal-title text-center" ng-if="crawlForm.modalType == 'twitter'">TWITTER Parameters</h4>
+			</div>
+			<div class="modal-body">
+
+				<!-- BEGIN GOOGLE, BING CASE -->
+				<div ng-if="crawlForm.modalType == 'google' || crawlForm.modalType == 'bing'" >
+					<div class="form-group">
+						<label class="col-sm-4 control-label">All of these words</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" ng-model="crawlForm.query"/>
+						</div>
+					</div>
+
+					<fieldset disabled>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">This exact phrase</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" ng-model="crawlForm.params.operators_not[0]" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Any of these words</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" ng-model="crawlForm.params.operators_not[1]" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">None of these words</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" ng-model="crawlForm.params.operators_not[2]" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Location</label>
+							<div class="col-sm-3">
+
+								<ol class="nya-bs-select form-control"
+									ng-model="crawlForm.params.countries"
+									data-live-search="false"
+									title="Country"
+									multiple
+									data-size="7" >
+									<li  nya-bs-option="country in countries" ng-click="clickMultiToSingleOption('country')" >
+										<a>
+											<span>{{country.label}}</span>
+											<span class="glyphicon glyphicon-ok check-mark"></span>
+										</a>
+									</li>
+								</ol>
+							</div>
+							<label class="col-sm-3 control-label">Language</label>
+							<div class="col-sm-3">
+
+								<ol class="nya-bs-select form-control"
+									ng-model="crawlForm.params.languages"
+									data-live-search="false"
+									title="Language"
+									multiple
+									data-size="7" >
+									<li nya-bs-option="language in languages" ng-click="clickMultiToSingleOption('language')">
+										<a>
+											<span>{{language.label}}</span>
+											<span class="glyphicon glyphicon-ok check-mark"></span>
+										</a>
+									</li>
+								</ol>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">From</label>
+							<div class="col-sm-3">
+								<input class="form-control" type="text" ng-model="crawlForm.params.from" datepicker /><!-- <br/>{{ crawlForm.googleParams.from }} -->
+							</div>
+							<label class="col-sm-3 control-label">To</label>
+							<div class="col-sm-3">
+								<input class="form-control" type="text" ng-model="crawlForm.params.to" datepicker /><!-- <br/>{{ crawlForm.googleParams.to }} -->
+							</div>
+						</div>
+					</fieldset>
+					<hr>
+				</div>
+				<!-- END GOOGLE, BING CASE -->
+				<!-- BEGIN TWITTER CASE -->
+				<div ng-if="crawlForm.modalType == 'twitter'" >
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">All of these words</label>
+						<div class="col-sm-9">
+							<input class="form-control" type="text" ng-model="crawlForm.query"/>
+						</div>
+					</div>
+
+					<fieldset disabled>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">This exact phrase</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" ng-model="crawlForm.params.operators_not[0]" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Any of these words</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" ng-model="crawlForm.params.operators_not[1]" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">None of these words</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" ng-model="crawlForm.params.operators_not[2]" />
+							</div>
+						</div>
+
+						<div class="form-group" >
+							<label class="col-sm-3 control-label">#Hashtags</label>
+							<div class="col-sm-3">
+								<input class="form-control" type="text" ng-model="crawlForm.params.hashtags" />
+							</div>
+							<label class="col-sm-3 control-label">@Accounts</label>
+							<div class="col-sm-3">
+								<input class="form-control" type="text" ng-model="crawlForm.params.accounts" />
+							</div>
+						</div>
+
+						<div class="form-group" >
+							<label class="col-sm-3 control-label">Location</label>
+							<div class="col-sm-3">
+
+								<ol class="nya-bs-select form-control"
+									ng-model="crawlForm.params.countries"
+									data-live-search="false"
+									title="Country"
+									multiple
+									data-size="7" >
+									<li  nya-bs-option="country in countries" ng-click="clickMultiToSingleOption('country')" >
+										<a>
+											<span>{{country.label}}</span>
+											<span class="glyphicon glyphicon-ok check-mark"></span>
+										</a>
+									</li>
+								</ol>
+							</div>
+
+							<label class="col-sm-3 control-label">Language</label>
+							<div class="col-sm-3">
+
+								<ol class="nya-bs-select form-control"
+									ng-model="crawlForm.params.languages"
+									data-live-search="false"
+									title="Language"
+									multiple
+									data-size="7" >
+									<li nya-bs-option="language in languages" ng-click="clickMultiToSingleOption('language')">
+										<a>
+											<span>{{language.label}}</span>
+											<span class="glyphicon glyphicon-ok check-mark"></span>
+										</a>
+									</li>
+								</ol>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">From</label>
+							<div class="col-sm-3">
+								<input class="form-control" type="text" ng-model="crawlForm.params.from" datepicker /><!-- <br/>{{ crawlForm.googleParams.from }} -->
+							</div>
+							<label class="col-sm-3 control-label">To</label>
+							<div class="col-sm-3">
+								<input class="form-control" type="text" ng-model="crawlForm.params.to" datepicker /><!-- <br/>{{ crawlForm.googleParams.to }} -->
+							</div>
+						</div>
+						</fieldset>
+
+
+
+				</div>
+				<!-- END TWITTER CASE -->
+
+
+			</div>
+
+			<div class="modal-footer">
+				<span ng-if="crawlForm.modalType == 'twitter'" ng-controller="twitterController" >
+					<input id="connectButton" class="btn btn-action" type="button" value="Connect Twitter" style="float: left;" ng-click="onConnectToTwitter()" />
+					<input id="disconnectButton" class="btn btn-action" type="button" value="Disconnect Twitter" style="float: left;" ng-click="onDisconnectTwitter()" />
+				</span>
+				<input class="btn btn-action" type="submit" value=" OK " />
+			</div>
+
+		</form>
+	</div>
+</div>

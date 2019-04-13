@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Smart Finder</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+    <!-- build:css public/css/lib.min.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.css" />
+        <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-plain.css" />
+        <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
+        <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+        <link rel="stylesheet" href="bower_components/nya-bootstrap-select/dist/css/nya-bs-select.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.css" />
+        <!-- endbower -->
+
+        <!-- fancy tree -->
+        <link rel="stylesheet" href="bower_components/jquery.fancytree/dist/skin-lion/ui.fancytree.css" />
+        <!-- ui-gird -->
+        <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+
+    <!-- endbuild -->
+
+    <!-- build:css public/css/app.min.css -->
+        <!-- injector:css -->
+        <link rel="stylesheet" href="public/css/app.css">
+        <link rel="stylesheet" href="public/css/graphics.css">
+        <link rel="stylesheet" href="public/css/libs-customization.css">
+        <link rel="stylesheet" href="public/css/menu.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+    <!-- endinjector -->
+    <!-- endbuild -->
+
+    <!-- build:js public/js/lib.min.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/ngDialog/js/ngDialog.js"></script>
+        <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+        <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+        <script src="bower_components/nya-bootstrap-select/dist/js/nya-bs-select.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-i18n/angular-locale_fr-fr.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/d3/d3.js"></script>
+        <script src="bower_components/d3pie/d3pie/d3pie.js"></script>
+        <script src="bower_components/angular-utils-pagination/dirPagination.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.js"></script>
+        <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.min.js"></script>
+        <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+        <!-- endbower -->
+
+        <!-- fancytree -->
+        <script src="bower_components/jquery.fancytree/dist/jquery.fancytree-all.js"></script>
+        <script src="bower_components/jquery.fancytree/dist/src/jquery.fancytree.dnd.js"></script>
+        <script src="bower_components/jquery.fancytree/dist/src/jquery.fancytree.filter.js"></script>
+
+        <!-- ui-grid-->
+        <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+        <!-- conext menu -->
+        <script src="bower_components/bootstrap-contextmenu/bootstrap-contextmenu.js"></script>
+        <!--D3 cloud -->
+        <script src="bower_components/d3cloud/build/d3.layout.cloud.js"></script>
+
+    <!-- endbuild -->
+    <style>
+        .navbar-nav > li > a {
+            padding-top: 4px;
+            padding-bottom: 4px;
+            line-height: 20px;
+        }
+        .active{
+            background-color: transparent;
+        }
+        #menuFolder span:hover{
+            color:#0b58a2;
+            cursor: pointer;
+        }
+        /* color of diabled menu item*/
+        .dropdown-menu > .disabled > a{
+            color:#b3b3b3;
+        }
+        .nopadding{
+            padding: 0 !important;
+        }
+    </style>
+
+</head>
+
+
+<body ng-app="semdeePortal" style="overflow-x:hidden;background-color:#eaeaea;">
+
+    <div class="login-row" >
+
+        <div class="col-md-10">
+            <a href="#/home"><img src="public/image/logo-semdee.png"></a>
+            <ul class="nav navbar-nav">
+                <!--
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+                -->
+            </ul>
+        </div>
+
+        <div class="col-md-2 col-md-offset-0 text-left">
+
+            <div id="login-btn" ng-show="$root.currentUser" class="btn-group">
+                <span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    {{$root.currentUser.username}}<span class="caret"></span>
+                </span>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/profile"><span class="fa fa-user"></span> My profile</a></li>
+                    <li><a href="#/params"><span class="fa fa-cog"></span> Setting</a></li>
+                    <li class="divider"></li>
+                    <li><a href ng-click="logout()"><span class="fa fa-sign-out"></span> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="menu" ng-controller="menuController" ng-if="currentUser">
+	
+        <div class="menu-item" style="height:2em;"></div>
+
+        <div id="menuFolder" class="menu-item" style="background-color:#009FE3; ">
+            <div class="menu-divicon">
+                <span class="fa fa-2x fa-bars" ng-click="expandMenu()"></span>
+            </div>
+            <form class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="textFilter" id="filterTree" ng-keyup="filterTree(textFilter)" placeholder="Search..."/>
+                </div>
+            </form>
+            <div class="pull-right" id="treeBar">
+                <!--
+                <span class="pull-right fa fa-2x fa-sort" ng-click="sortTree()"></span>
+                -->
+            </div>
+        </div>
+
+		<!---------TREE---------->
+		<div id="tree">
+            <ul id="treeData" style="display: none;">
+              <li id="ROOT1" data-type="ROOT1" class="lazy folder"><b>Original Data</b>
+              <li id="ROOT2" data-type="ROOT2" class="lazy folder"><b>Cognitive Space</b>
+            </ul>
+	   </div>
+
+        <!--------END TREE---------->
+
+        <!-- CONTEXT MENU -->
+        <div id="context-menu">
+            <ul class="dropdown-menu" role="menu">
+
+                <li><a tabindex="-1" href="#get"><span class="fa fa-search"></span> Get Data</a></li>
+                <li><a tabindex="-1" href="#add_to"><span class="fa fa-plus"></span> Add to Cognitive Space</a></li>
+
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#add_space"><span class="fa fa-file-o"></span> Create Cognitive Space</a></li>
+                <li><a tabindex="-1" href="#add_monitor"><span class="fa fa-file-o"></span> Create Smart Clusters</a></li>
+                <li><a tabindex="-1" href="#add_categorizer"><span class="fa fa-file-o"></span> Create Advanced Clusters</a></li>
+                <li><a tabindex="-1" href="#add_folder"><span class="fa fa-file-o"></span> Create Manual Clusters</a></li>
+
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#clone"><span class="fa fa-copy"></span> Clone</a></li>
+                <li><a tabindex="-1" href="#rename"><span class="fa fa-edit"></span> Rename</a></li>
+                <li><a tabindex="-1" href="#delete"><span class="fa fa-times"></span> Delete</a></li>
+
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#sort1"><span ng-class="sortDirAsc ? 'fa fa-sort-amount-asc':'fa fa-sort-amount-desc'"></span> Sort By Title </a></li>
+                <li><a tabindex="-1" href="#sort2"><span ng-class="sortDirAsc ? 'fa fa-sort-amount-asc':'fa fa-sort-amount-desc'"></span> Sort By Time </a></li>
+                <li><a tabindex="-1" href="#sort3"><span ng-class="sortDirAsc ? 'fa fa-sort-amount-asc':'fa fa-sort-amount-desc'"></span> Sort By Distance </a></li>
+                <li><a tabindex="-1" href="#sort4"><span ng-class="sortDirAsc ? 'fa fa-sort-amount-asc':'fa fa-sort-amount-desc'"></span> Sort By Nb.Documents </a></li>
+
+            </ul>
+        </div>
+
+        <!--- END MENU ---->
+
+    </div>
+    <div id="main-div" style="margin-left:0em;margin-top:2em;">
+        <div id="body" ng-view ></div>
+    </div>
+
+    <!-- build:js public/js/app.min.js -->
+        <!-- injector:js -->
+        <script src="app/app.js"></script>
+        <script src="app/js/controllers/authController.js"></script>
+        <script src="app/js/controllers/categorizerController.js"></script>
+        <script src="app/js/controllers/crawlController.js"></script>
+        <script src="app/js/controllers/homeController.js"></script>
+        <script src="app/js/controllers/monitoringController.js"></script>
+        <script src="app/js/controllers/paramsController.js"></script>
+        <script src="app/js/controllers/profilingController.js"></script>
+        <script src="app/js/controllers/relatedContentController.js"></script>
+        <script src="app/js/controllers/searchController.js"></script>
+        <script src="app/js/controllers/spaceController.js"></script>
+        <script src="app/js/controllers/taggerController.js"></script>
+        <script src="app/js/directives/bubble-chart.js"></script>
+        <script src="app/js/directives/chart.js"></script>
+        <script src="app/js/directives/cloud-chart.js"></script>
+        <script src="app/js/directives/datepicker.js"></script>
+        <script src="app/js/directives/donut-chart.js"></script>
+        <script src="app/js/directives/tooltip.js"></script>
+        <script src="app/js/directives/upload-file.js"></script>
+        <script src="app/js/directives/url.js"></script>
+        <script src="app/js/filters/filters.js"></script>
+        <script src="app/js/filters/isEmptyFilter.js"></script>
+        <script src="app/js/filters/toArrayFilter.js"></script>
+        <script src="app/js/services/authService.js"></script>
+        <script src="app/js/services/categorizerService.js"></script>
+        <script src="app/js/services/categoryGroupService.js"></script>
+        <script src="app/js/services/categoryService.js"></script>
+        <script src="app/js/services/configService.js"></script>
+        <script src="app/js/services/crawlService.js"></script>
+        <script src="app/js/services/documentsService.js"></script>
+        <script src="app/js/services/monitoringService.js"></script>
+        <script src="app/js/services/paramsService.js"></script>
+        <script src="app/js/services/profilingService.js"></script>
+        <script src="app/js/services/semanticSpaceService.js"></script>
+        <script src="app/js/services/semdeeService.js"></script>
+        <script src="app/js/services/taggerService.js"></script>
+        <script src="app/js/services/uploadService.js"></script>
+        <script src="app/js/services/treeService.js"></script>
+
+        <!-- endinjector -->
+    <!-- endbuild -->
+</body>
+</html>

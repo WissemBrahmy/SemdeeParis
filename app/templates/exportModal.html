@@ -1,0 +1,35 @@
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" ng-submit="exportCluster(shared.space.id)">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title" >Export Clusters</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="expError">
+                        <label class="col-sm-12"><span class="fa fa-info-circle fa-2x blue"></span> {{expError}}</label>
+                        <div> </div>
+                    </div>
+                    <div class="form-group" ng-show="!expError">
+                        <label class="col-sm-3 control-label">Cognitive Space</label>
+                        <div class="col-sm-9 ">
+                            <ol class="nya-bs-select form-control" ng-change="changeSpace()" ng-model="shared.space" data-live-search="true"
+                                title="Select a cognitive space" data-size="10">
+                                <li nya-bs-option="space in shared.spaces">
+                                    <a>{{ space.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-action" type="submit" value="Export" ng-disabled="expError || !shared.space" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

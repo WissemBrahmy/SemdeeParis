@@ -1,0 +1,54 @@
+<div class="row ng-scope" ng-show="ngDialogData.chartActive && !(ngDialogData.cloud | isEmpty)" >
+	<div class="col-lg-12" style="margin-top:10px;" >
+		<span data-toggle="tooltip" data-placement="left" tooltip title="Click to show / hide Word cloud" style="cursor:pointer;margin-right:20px" ng-class="ngDialogData.showCloud? 'fa fa-caret-up pull-right':'fa fa-caret-down pull-right'" ng-click="ngDialogData.showCloud=!ngDialogData.showCloud" ></span>
+		<div class="panel" ng-show="ngDialogData.showCloud" >
+			<cloud ng-click="ngDialogData.showCloud = false" cloud-data="ngDialogData.cloud.data" cloud-width="1000" __cloud-height_="200" ></cloud>
+		</div>
+	</div>
+</div>
+<div class="row ng-scope">
+	<div class="col-lg-12" style="margin-top:10px;padding-left:30px;padding-right:30px" ng-show="ngDialogData.relatedContent.length > 0" >
+		<input type="text" class="form-control" placeholder="Filter related content by title" ng-model="search.title" />
+	</div>
+	<div ng-class="ngDialogData.showRelatedContent ==true ? 'col-md-9':'col-md-12'" 
+	style="padding-right:20px" >
+        <div class="panel" style="margin-right:2px" >
+         	<div class="panel-heading" ><div style="width:80%;overflow: hidden;">{{ngDialogData.title}}</div>
+				<a ng-show="ngDialogData.url!=null" href="{{ngDialogData.url}}" target="_blank" title="Open document in a new tab of browser">
+				<button type="button" class="btn btn-action pull-right ng-binding" style="margin:-28px -10px 0 0;">
+					<span class="fa fa-file-o"></span> Open in new window
+				</button>
+				</a>
+			</div>
+            <div class="panel-body" >
+               <div class="embed-responsive embed-responsive-16by9" style="min-height:500px">
+					<iframe ng-if="ngDialogData.url != null" class="embed-responsive-item" 
+						ng-src="{{ngDialogData.url}}" style="height:100%"></iframe>
+					<div ng-if="ngDialogData.url == null" style="height:500px;overflow-y:auto">
+						{{ngDialogData.description}}
+					</div>
+				</div> 
+            </div>
+        </div>
+    </div>
+    <div ng-if="ngDialogData.showRelatedContent" class="col-md-3" style="padding-left:0px">
+        <div class="panel" style="margin-left:0px">
+        	<div class="panel-heading">Related content</div>
+        	<div class="_panel-body" style="padding-left:10px;padding-right:0px">
+        		<div class="embed-responsive embed-responsive-16by9" style="min-height:500px">
+        			
+		            <div ng-if="ngDialogData.url != null" class="text-center" ng-show="ngDialogData.doc && ngDialogData.relatedContent.length == 0">
+	                    <img src="public/image/loader.gif" />
+	                </div>
+		            <div style="height:500px;overflow-y:auto">
+		                <div ng-repeat="doc in filteredRelatedContent = (ngDialogData.relatedContent | filter:search) " ng-show="ngDialogData.relatedContent.length > 0" >
+		                    <div class="doc-bloc">
+								<ng-include src="'app/templates/documentDescPartial.html'"></ng-include>
+		                    </div>
+		                </div>
+		            </div>
+	             </div> 
+	         </div>   
+        </div>
+    </div>
+</div>

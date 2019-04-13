@@ -1,0 +1,50 @@
+<div class="row">
+<div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">Search space</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    Select a semantic space to work on :
+                    <ol class="nya-bs-select" ng-change="selectedSpace()" ng-model="shared.space" data-live-search="true"
+                        title="Select a semantic space" data-size="10">
+                        <li nya-bs-option="space in shared.spaces">
+                            <a>{{ space.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="shared.space">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">Search {{shared.space.label}}</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <form ng-submit="searchSpace(shared.space.id,query)" name="searchForm">
+                        <div class="form-group">
+                            <label for="spaceQuery" >Query this semantic space :</label>
+                            <input id="spaceQuery" type="text" ng-model="query" class="form-control" placeholder="Specify word or sentence to search for" />
+                        </div>
+                        <button type="submit" class="btn btn-action pull-right" ng-disabled="!query ">
+                            <span class="fa fa-search"></span> Search {{shared.space.label}}
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-12" style="margin-top:2em;" ng-show="searchResult">
+                    <span class="fa fa-info-circle fa-2x blue"></span> {{searchResult.length}} results for query : {{searchQuery}}<br /><br />
+                    <div dir-paginate="doc in searchResult | itemsPerPage: 10" pagination-id="resList" current-page="currentPageDocsList">
+                        <div class="col-md-12 doc-bloc">
+                            <ng-include src="'app/templates/documentDescPartial.html'"></ng-include>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <dir-pagination-controls pagination-id="resList"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>

@@ -1,0 +1,64 @@
+<div ng-controller="regexController">
+
+        <!-- Modal to launch a new regex search -->
+        <div class="modal fade" id="newRegexSearchModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="form-horizontal" ng-submit="validateNewRegexSearch()">
+                        <div class="modal-header">
+                            <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                                <span class="fa fa-close"></span>
+                            </button>
+                            <h4 class="modal-title">New Personal Data Extraction</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="label" class="col-sm-3 control-label">Search Label</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="label" name="label" ng-required="true" ng-model="regexSearchForm.label" aria-required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="crawls" class="col-sm-3 control-label">Original Data</label>
+                                <div class="col-sm-9">
+                                    <ol id="crawls" class="nya-bs-select form-control"
+                                        ng-model="regexSearchForm.crawls" data-live-search="true"
+                                        title="Select a original data" data-size="10" >
+                                        <li nya-bs-option="crawl in crawls | toArray | filter: {status: 2}">
+                                            <a>
+                                                <span>{{crawl.query}}</span>
+                                                <small>({{crawl.volume}} docs)</small>
+                                                <span class="glyphicon glyphicon-ok check-mark"></span>
+                                            </a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="crawls" class="col-sm-3 control-label">Personal Data List</label>
+                                <div class="col-sm-9">
+                                    <ol id="crawls" class="nya-bs-select form-control"
+                                        ng-model="regexSearchForm.rgxlists" data-live-search="true"
+                                        title="Select personal data lists" data-size="10" multiple>
+                                        <li nya-bs-option="list in regexLists | toArray">
+                                            <a>
+                                                <span>{{list.label}}</span>
+
+                                                <span class="glyphicon glyphicon-ok check-mark"></span>
+                                            </a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-action" type="submit" ng-disabled="regexSearchForm.$invalid || regexSearchForm.crawls.length == 0">
+                                <span class="fa fa-save"></span> Launch
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+</div>

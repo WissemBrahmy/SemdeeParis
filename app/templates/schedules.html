@@ -1,0 +1,59 @@
+<!-- Area displaying a list of semantic spaces AND crawls of the user !-->
+<div class="row" ng-init="init()" ><!--ng-controller="scheduleController"
+    <!-- Schedule Crawls list -->
+    <div class="col-md-12">
+        <div class="panel" >
+            <div class="panel-heading"><span class="fa fa-2x fa-clock-o"> Schedule the Crawls</span></div>
+            <div class="panel-body" >
+                <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="schedules | toArray | isEmpty">
+                    <thead>
+                    <tr>
+                        <th style="width:3%" class="text-center">#</th>
+                        <th>Schedule Name</th>
+                        <th style="width:18%" >Launching Date/Time</th>
+                        <th style="width:18%" >Sources</th>
+                        <th style="width:10%">Duration</th>
+                        <th style="width:18%">Reccurence
+                            <p style="font-size:11px;font-weight:normal" class="text-center">Minute / Hour / Day / Week / Month </p>
+                        </th>
+                        <th style="width:8%">Volume</th>
+                        <th style="width:5%" >Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr dir-paginate="schedule in schedules | toArray | itemsPerPage : 10" pagination-id="schedulesPage"
+                        ng-click="" ng-class="">
+                        <td class="text-right">{{schedule.id}}</td>
+                        <td>{{schedule.query}}</td>
+                        <td class="text-center">{{schedule.beginDate | date :'MM-dd-yyyy HH:mm:ss'}}</td>
+                        <td ></td>
+                        <td class="text-right">{{schedule.duration}}</td>
+                        <td >{{schedule.minute}} {{schedule.hour}} {{schedule.daymonth}} {{schedule.dayweek}} {{schedule.month}} </td>
+                        <td class="text-right">
+                            <span ng-show="schedule.status != 3"><img src="public/image/loader.gif" /></span>
+                             {{schedule.volume}}
+                        </td>
+                        <td class="text-center">
+                            <a title="Delete schedule" class="btn btn-subaction btn-xs" ng-click="deleteSchedule(schedule)">
+                                <span class="fa fa-remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <dir-pagination-controls pagination-id="schedulesPage"></dir-pagination-controls>
+                </div>
+                <div class="alert alert-warning" ng-show="schedules | toArray | isEmpty">No schedule crawl yet! Please launch one.</div>
+
+                <br/>
+                <div class="text-right">
+                    <a href="#/home"><button type="submit" class="btn btn-action">
+                        <span class="fa fa-home"></span> Done
+                    </button></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

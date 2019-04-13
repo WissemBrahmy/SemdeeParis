@@ -1,0 +1,136 @@
+    <div class="panel-heading">
+            <span ng-if="activeNode.data.type=='SPACE'">Tags - </span>
+            <span ng-if="activeNode.data.type=='MONITOR' || activeNode.data.type=='CATEGORIZER'">Chart - </span>
+            {{activeNode.title}}
+    </div>
+
+    <div style="background:#EEE; padding: 5px;" ng-if="activeNode.data.type!='SPACE'">
+        <div class="form-inline text-right">
+            <select class="form-control" ng-model="chartFilter" ng-change="onChartFilter(chartFilter)"
+                    ng-show="chart.data && showChart && (activeNode.data.type=='MONITOR' || activeNode.data.type=='CATEGORIZER')">
+                <option value=1>All Clusters</option>
+                <option value=2>Top 10</option>
+                <option value=3>Last 10</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="panel-body" ng-if="activeNode.data.type=='MONITOR' || activeNode.data.type=='CATEGORIZER' || activeNode.data.type=='ROOT1'">
+                <div class="col-md-9">
+                    <p class="blockquote" >
+                        <span class="fa fa-info-circle fa-2x blue"></span>
+                        Click a category on the chart to browse its detailed list of documents {{activeNode.data.type}}
+                    </p>
+                    <chart chart-show-types="true" chart-data="chart.data" chart-title="chart.title" chart-type="chart.type" chart-available-types="donut-chart,bubble-chart"></chart>
+                </div>
+
+                <div class="col-md-3" >
+                    <div class="panel"  ng-show="clusterdocuments">
+                        <div class="panel-heading" ng-if="activeNode.data.type=='MONITOR'">Clustering Statistics</div>
+                        <div class="panel-heading" ng-if="activeNode.data.type=='CATEGORIZER'">Categorizer Statistics</div>
+                        <div class="panel-body">
+                            <ul style="font-size: 12px; margin-left: -30px;" ng-if="activeNode.data.type=='MONITOR'">
+                                <!--<li>NUM DOC IN SPACE: <b>{{nbDocsOfSpace=getNbDocsOfSpace(activeNode.data.spaceId)}}</b></li>-->
+                                <li>NUM OF DOCS IN SPACE: <b>{{nbDocsOfSpace}}</b></li>
+                                <li>NUM OF DOCS IN CLUSTERING: <b>{{nbDocsOfMonitoring}}</b></li>
+                                <li>NUM OF CLUSTERS: <b>{{nbOfClusters}}</b></li>
+                            </ul>
+                            <ul style="font-size: 12px; margin-left: -30px;" ng-if="activeNode.data.type=='CATEGORIZER'">
+                                <!--<li>NUM DOC IN SPACE: <b>{{nbDocsOfSpace=getNbDocsOfSpace(activeNode.data.spaceId)}}</b></li>-->
+                                <li>NUM DOC IN SPACE: <b>{{nbDocsOfSpace}}</b>
+                                <li>NUM DOC IN CATEGORIZER: <b>{{nbDocsOfCategorizer}}</b></li>
+                                <li>NUM OF CATEGORIES: <b> {{nbOfCategories}} </b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel" ng-show="activeNode.data.type=='MONITOR' && showMonitoringStatistics">
+                        <div class="panel-heading">Cluster Statistics</div>
+                        <div class="panel-body">
+                            <ul style="font-size: 12px; margin-left: -30px;" >
+                                <li>NUM OF DOC: <b>{{activeCluster.nbDocs}}</b></li>
+                                <li>DENSITY: <b>{{activeCluster.density}}</b></li>
+                                <li>CLUSTER PERCENTAGE ON CLUSTERING:
+                                    <b>{{nbDocsOfMonitoring>0? (nbDocsOfCluster*100/nbDocsOfMonitoring|number:2) :0}}%</b>
+                                </li>
+                                <li>CLUSTER PERCENTAGE ON SPACE:
+                                    <b>{{nbDocsOfSpace>0? (nbDocsOfCluster*100/nbDocsOfSpace|number:2) :0}}%</b>
+                                </li>                               <!-- <li>LINKS:</li>-->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel" ng-show="activeNode.data.type=='CATEGORIZER' && showCategorizerStatistics">
+                        <div class="panel-heading">Category Statistics</div>
+                        <div class="panel-body">
+                            <ul style="font-size: 12px; margin-left: -30px;" >
+                                <li>NUM OF DOC: <b>{{nbDocsOfCategory}}</b></li>
+                                <li>DENSITY: <b>{{activeCluster.density}}</b></li>
+                                <li>CATEGORY PERCENTAGE ON CATEGORIZER:
+                                    <b>{{nbDocsOfCategorizer>0? (nbDocsOfCategory*100/nbDocsOfCategorizer|number:2) :0}}%</b>
+                                </li>
+                                <li>CATEGORY PERCENTAGE ON SPACE:
+                                    <b>{{nbDocsOfSpace>0? (nbDocsOfCategory*100/nbDocsOfSpace|number:2) :0}}%</b>
+                                </li>                               <!-- <li>LINKS:</li>-->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel" ng-show="clusterdocuments && activeNode.data.type=='MONITOR'">
+                        <div class="panel-heading">Clustering Parameters</div>
+                        <div class="panel-body">
+                            <ul style="font-size: 12px; margin-left: -30px;" >
+                                <li>MIN DOC BY CLUSTER: <b>{{activeNode.data.minDocByCluster}}</b></li>
+                                <li>MIN PROXIMITY OF DOCUMENTS: <b>{{activeNode.data.minProximityOfDocuments}}</b></li>
+                                <li>MIN PROXIMITY OF CLUSTERS: <b>{{activeNode.data.minProximityOfClusters}}</b></li>
+                                <li>NUM OF INITIAL SAMPLES: <b>{{activeNode.data.numOfInitialSamples}}</b></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--<div class="panel"  ng-show="activeCluster.tags">-->
+                    <div class="panel"  ng-if="isClusterActive && activeCluster!=null">
+                        <div class="panel-heading">Cluster covered subjects</div>
+                        <div class="panel-body">
+                            <span ng-repeat="tag in activeCluster.tags" class="tag btn btn-default btn-xs nohover"><span class="glyphicon glyphicon-tags"></span> {{tag}}</span>
+                        </div>
+                    </div>
+                    <div class="panel"  ng-if="isCategoryActive && activeCluster!=null">
+                        <div class="panel-heading">Category covered subjects</div>
+                        <div class="panel-body">
+                            <span ng-repeat="tag in activeCluster.tags" class="tag btn btn-default btn-xs nohover"><span class="glyphicon glyphicon-tags"></span> {{tag}}</span>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+    <!-- TAGS -->
+    <div class="panel-body" ng-if="activeNode.data.type=='SPACE'">
+        <div class="col-md-7">
+            <chart2 chart2-show-types="false" chart2-tags="chart.data" chart2-type="chart.type" chart-available-types="cloud-chart" ></chart2>
+        </div>
+        <div class="col-md-4 pull-right">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Cognitive space details
+                        <!--
+                        <div class="pull-right" ng-show="false">
+                            <a href ng-click="viewMode = 'list'" title="List view" class="btn btn-subaction btn-xs" ng-class="{active : viewMode == 'list'}" style="margin-right:0.5em;"><span class="fa fa-list"></span></a>
+                            <a href ng-click="viewMode = 'graph'; chart.type='donut-chart' " title="Graph view" ng-class="{active : viewMode == 'graph'}" class="btn btn-subaction btn-xs"><span class="fa fa-pie-chart"></span></a>
+                        </div>
+                        -->
+                    </div>
+                    <div class="panel-body">
+                        <label style="display:inline;">Space name :</label>  {{activeSpace.label}}( {{activeSpace.creationDate | date:'MM-dd-yyyy HH:mm:ss'}} )<br/>
+                        <label>Composed of crawls : </label>
+                        <ul>
+                            <li ng-repeat="crawlId in activeSpace.crawlIds">{{allCrawls[crawlId].query}} - {{allCrawls[crawlId].volume}} documents</li>
+                        </ul>
+                    </div>
+                    <!--
+                    <div class="panel-body" ng-show="viewMode == 'graph' && chartActive">
+                        <chart chart-show-types="true" chart-data="chart.data" chart-title="chart.title" chart-type="chart.type" chart-available-types="donut-chart,bubble-chart" chart-unselectable="true"></chart>
+                    </div>
+                    -->
+                </div>
+            </div>
+    </div>

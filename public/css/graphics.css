@@ -1,0 +1,49 @@
+svg > g > text:hover{
+    opacity: .6 !important;
+    cursor:default;
+}
+
+g[class$='-inner'],
+g[class$='-outer'] {
+    cursor: default;
+}
+
+div.selectable g[class$='_arc'],
+div.selectable g[class$='-inner'],
+div.selectable g[class$='-outer'],
+div.selectable g[class$='lineGroup'],
+circle,
+circle + text {
+    cursor: pointer;
+}
+
+.row {
+    margin-top: 0.5em;
+}
+
+text.bubble,
+text > tspan.bubble{
+    text-anchor: middle;
+    fill: #000;
+    font-size: 0.7em;
+    font-family: arial;
+}
+
+text.bubble.active,
+text > tspan.bubble.active{
+    font-weight: bold;
+   /* font-size: 0.8em;*/
+}
+svg > g > text.bubble:hover,
+svg > g > tspan.bubble:hover{
+    cursor:pointer;
+}
+
+text.cloud.active {
+    font-weight: bold;
+}
+
+text.cloud {
+    font-family: Impact;
+    fill-opacity: 0;
+}

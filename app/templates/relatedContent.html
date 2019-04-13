@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">Related content</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    Select a semantic space to work on :
+                    <ol class="nya-bs-select" ng-change="selectedSpace()" ng-model="shared.space" data-live-search="true"
+                        title="Select a semantic space" data-size="10">
+                        <li nya-bs-option="space in shared.spaces">
+                            <a>{{ space.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="shared.space">
+    <div ng-class="relatedDoc ? 'col-md-6':'col-md-12'">
+        <div class="panel">
+            <div class="panel-heading">
+                Documents from {{shared.space.label}} - {{documents.length}} documents
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-condensed table-bordered" style="width:100%;margin-bottom:0;" ng-show="shared.spaces.length > 0">
+                    <thead>
+                    <tr>
+                        <th colspan="2" style="background-color:#444"><input type="text" class="form-control" placeholder="Filter documents by title" ng-model="search.title" /></th>
+                    </tr>
+                    <tr>
+                        <th>Title </th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr dir-paginate="doc in documents | filter: search | itemsPerPage: 10" pagination-id="resList" current-page="currentPageDocsList">
+                        <td>
+                            <ng-include src="'app/templates/documentDescPartial.html'"></ng-include>
+                        </td>
+                        <td class="text-center">
+                            <a href title="Find related content" class="btn btn-subaction btn-xs"
+                               ng-class="{active : doc.id == relatedDoc.id }"
+                               ng-click="getRelatedContent(shared.space.id,doc)">
+                                <span class="fa fa-arrows-h"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <dir-pagination-controls pagination-id="resList" current-page="currentPageDocsList"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" ng-show="relatedDoc">
+        <div class="panel">
+            <div class="panel-heading">{{relatedDoc.title}}</div>
+            <div class="panel-body">{{relatedDoc.description | limitTo : 1000}}</div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">Related to "{{relatedDoc.title}}"</div>
+            <div class="panel-body">
+                <div class="text-center" ng-show="searchStart">
+                    <img src="public/image/loader.gif" />
+                </div>
+                <div dir-paginate="doc in relatedContent | itemsPerPage: 10" pagination-id="relList" ng-show="relatedContent.length > 0" current-page="currentPageRelatedDocsList">
+                    <div class="col-md-12 doc-bloc">
+                        <div class="col-md-11">
+                            <ng-include src="'app/templates/documentDescPartial.html'"></ng-include>
+                        </div>
+                        <div class="col-md-1 text-right" style="height: 2em;line-height: 2em;">
+                            <a href title="Find related content" class="btn btn-subaction btn-xs"
+                               ng-click="getRelatedContent(shared.space.id,doc)">
+                                <span class="fa fa-arrows-h"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" ng-show="!searchStart">
+                    <dir-pagination-controls pagination-id="relList"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>

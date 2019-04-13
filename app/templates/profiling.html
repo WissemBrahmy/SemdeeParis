@@ -1,0 +1,87 @@
+<div class="row info">
+    <div class="col-md-12 info-block">
+        <span class="fa fa-info-circle " style="color:#009FE3"></span>
+        Piste des personnes en fonction de leurs docs.
+    </div>
+</div>
+<div class="panel">
+    <div class="panel-heading">
+        My profilings
+        <div class="btn-group pull-right">
+            <a href ng-click="launchNewProfiling()" title="Launch a new profiling" class="btn btn-action btn-xs"><span class="fa fa-plus"></span></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="alert alert-danger" ng-show="profilings | isEmpty">No profiling yet! Please launch one.</div>
+        <a ng-repeat="profiling in profilings" ng-disabled="profiling.status != 2"
+           ng-click="getProfilingResult(profiling)"
+           ng-class="{active: activeProfiling && activeProfiling.id == profiling.id}" class="btn btn-item">{{profiling.label}}</a>
+    </div>
+</div>
+<div ng-show="activeProfiling" id="profilingDetail">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel">
+                <div class="panel-heading"><h3 class="panel-title">Charts</h3></div>
+                <div class="panel-body">
+                    <chart chart-data="chart.data" chart-title="chart.title" chart-type="chart.type" chart-available-types="bubble-chart,donut-chart"></chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" ng-show="person" id="documentsList">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{person}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div dir-paginate="document in documents | itemsPerPage: 15">
+                        <div class="col-md-12 doc-bloc">
+                            <div class="col-md-11">
+                                <span style="font-weight:bold">{{document.title}}</span><br/>
+                                {{document.description}}
+                            </div>
+                            <div class="col-md-1">
+                                <a href="{{document.url}}" target="_blank"><span class="fa fa-2x fa-link" style="height: 2em;line-height: 2em;"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <dir-pagination-controls on-page-change="scrollTo('documentsList')"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal launching a profiling -->
+<div class="modal fade" id="launchNewProfilingModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" ng-submit="validateLaunchNewProfiling()">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Launch a new profiling</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="label" class="col-sm-2 control-label">Label</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="label" name="label" ng-required="true"  ng-model="profilingForm.label" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="space" class="col-sm-2 control-label">Space</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="space" name="space" ng-options="space.label for space in spaces track by space.id" ng-model="profilingForm.space" ng-required="true">
+                                <option value="">Select a semantic space</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-action" type="submit" value="Launch!" ng-disabled="profilingForm.$invalid" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

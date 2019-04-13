@@ -1,0 +1,178 @@
+<div class="modal fade" id="launchMonitoringModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:65%;">
+        <div class="modal-content" >
+            <form name="myForm" class="form-horizontal" ng-submit="launchMonitoring()">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title" >Clustering</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Cognitive Space</label>
+                        <div class="col-sm-9">
+                            <ol id="cbxSpaceMonitoring" class="nya-bs-select form-control"
+                                ng-model="monitoringParams.space"
+                                data-live-search="true"
+                                title="Select a cognitive space"
+                                data-size="10" ng-change="onSelectCognitiveSpace()" >
+                                <li nya-bs-option="sp in monitoringParams.spaces" >
+                                    <a>
+                                        <span>{{sp.label}}</span>
+                                        <span class="glyphicon glyphicon-ok check-mark"></span>
+                                    </a>
+                                </li>
+                            </ol>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <!-- left group-->
+                        <div class="col-sm-7">
+
+                            <div class="col-sm-6 text-right" style="margin-top:22px">Document proximity</div>
+                            <div class="col-sm-6">
+                                <rzslider rz-slider-model="monitoringParams.simthreshold.sliderValue" rz-slider-options="monitoringParams.simthreshold.options" ></rzslider>
+                            </div>
+
+                            <div class="col-sm-6 text-right" style="margin-top:22px">Min num of doc in a cluster</div>
+                            <div class="col-sm-6">
+                                <rzslider rz-slider-model="monitoringParams.minNbrDocInCluster.sliderValue" rz-slider-options="monitoringParams.minNbrDocInCluster.options" ></rzslider>
+                            </div>
+
+                            <!-- //TODO here the hard coded threshold number 100000, should have been done softly.
+                                 Now no use anyway, cause the minimum_cluster_proximity value is integrated into the
+                                 webservice algorithm -->
+                            <!--<div ng-show="monitoringParams.minNbrDocInCluster.options.ceil>100000">
+                                <div class="col-sm-6 text-right" style="margin-top:22px">Cluster proximity</div>
+                                <div class="col-sm-6">
+                                    <rzslider rz-slider-model="monitoringParams.clusterProximity.sliderValue" rz-slider-options="monitoringParams.clusterProximity.options" ></rzslider>
+                                </div>
+                            </div>-->
+                           <!-- <div class="col-sm-12" style="padding-left:100px"  >(More than 100000 documents)</div>-->
+
+
+                            <!--<div class="col-sm-12" style="padding:10px">
+                                <table class="table-condensed" >
+                                    <tr>
+                                        <td class="col-sm-5">Recommended value</td>
+                                        <td><input ng-disabled="!monitoringParams.space"  type="checkbox" ng-model="monitoringParams.simthreshold.recommendedValue" ng-click="onClickRecommendedValue()" /></td>
+                                    </tr>-->
+                                   <!-- <tr>
+                                        <td nowrap="nowrap"><a href="javascript:void(0)" ng-click="onClickShowAdvanced($event)">Advanced parameters</a></td>
+                                        <td><span id="advancedParams" ng-click="onClickShowAdvanced($event)" class="action fa fa-play fa-rotate-90" style="cursor: pointer;width:10px"></span></td>
+                                    </tr>-->
+                                <!--</table>
+                            </div>-->
+
+                           <!-- <div ng-show="monitoringParams.showAdvancedParameters" >
+
+                                <div class="col-sm-6 text-right"  style="margin-top:22px">Mincard</div>
+                                <div class="col-sm-6">
+                                    <rzslider  rz-slider-model="monitoringParams.mincard.sliderValue" rz-slider-options="monitoringParams.mincard.options" ></rzslider>
+                                </div>
+
+                                <div class="col-sm-6 text-right"  style="margin-top:22px">Mergecos</div>
+                                <div class="col-sm-6">
+                                    <rzslider  rz-slider-model="monitoringParams.mergecos.sliderValue" rz-slider-options="monitoringParams.mergecos.options" ></rzslider>
+                                </div>
+
+                                <div class="col-sm-6 text-right"  style="margin-top:22px">Kvalue</div>
+                                <div class="col-sm-6">
+                                    <rzslider  rz-slider-model="monitoringParams.kvalue.sliderValue" rz-slider-options="monitoringParams.kvalue.options" ></rzslider>
+                                </div>
+
+                                <div class="col-sm-6 text-right"  style="margin-top:22px">Num Threads</div>
+                                <div class="col-sm-6">
+                                    <rzslider  rz-slider-model="monitoringParams.numthreads.sliderValue" rz-slider-options="monitoringParams.numthreads.options" ></rzslider>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12"><br/>
+                                <table class="table-condensed"  width="100%" >
+                                    <tr>
+                                        <td class="text-center">
+                                            <input ng-disabled="!monitoringParams.space" ng-click="onClickCompute()" type="button" class="pull-center btn btn-action" value="Compute" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            -->
+                        </div>
+
+
+
+
+
+                        <!-- right group -->
+                        <div class="col-sm-5">
+
+                            <div class="col-sm-12">
+                                <div class="panel">
+                                <div class="panel-heading">Cognitive Space Statistics</div>
+
+                                    <div class="panel-body ng-binding">
+                                        <table class="table-condensed table-striped"  width="100%" >
+                                            <tr>
+                                                <td>Nbr of docs</td>
+                                                <td class="text-right blue">{{monitoringParams.statisticsSpace.nbrOfDocs}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Created</td>
+                                                <td class="text-right blue">{{monitoringParams.statisticsSpace.created | date:"dd/MM/yyyy"}}</td>
+                                            </tr>
+
+
+                                            <!--<tr>
+                                                <td>Min nber of doc in cluster</td>
+                                                <td class="text-right blue">{{monitoringParams.minNbDocInCluster}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Max nber of doc in cluster</td>
+                                                <td class="text-right blue">{{monitoringParams.maxNbDocInCluster}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nber of clusters</td>
+                                                <td class="text-right blue">{{monitoringParams.nbOfCluster}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Average Proximity</td>
+                                                <td class="text-right blue">{{monitoringParams.mean}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Standard Deviation</td>
+                                                <td class="text-right blue">{{monitoringParams.stdev}}</td>
+                                            </tr>-->
+                                        </table>
+
+                                        <div>
+                                            <label>Composed of crawls : </label>
+                                            <!--<ul>
+                                                <li ng-repeat="crawlId in activeSpace.crawlIds">{{allCrawls[crawlId].query}} - {{allCrawls[crawlId].volume}} documents</li>
+                                            </ul>-->
+                                        </div>
+                                        <table class="table-condensed table-striped" width="100%">
+                                            <tr ng-repeat="crawlId in activeSpace.crawlIds" >
+                                                <td style="padding-left: 5px">{{allCrawls[crawlId].query}}</td>
+                                                <td class="text-right blue">{{allCrawls[crawlId].volume}}</td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input class="btn btn-action" type="button" value=" Cancel " onclick="$('#launchMonitoringModal').hide()" />
+                    <input class="btn btn-action" type="submit" value=" Launch Clustering " ng-disabled="!myForm.$valid || !monitoringParams.space"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

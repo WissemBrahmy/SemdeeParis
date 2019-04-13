@@ -1,0 +1,83 @@
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="myForm" class="form-horizontal" ng-submit="deepSearchWithType(shared.space.id)">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title" >Deep Search</h4>
+
+                </div>
+                <div class="modal-body" >
+                    <div class="form-group" style="padding-bottom: 0px">
+                        <div class="col-sm-12">
+                            <label class="col-sm-4 control-label" style="text-align:left;padding-left:5px">Cognitive Space</label>
+                            <div class="col-sm-8">
+                                <ol class="nya-bs-select form-control" ng-change="changeSpace()" ng-model="shared.space" data-live-search="true"
+                                    title="Select a cognitive space" data-size="10">
+                                    <li nya-bs-option="space in shared.spaces">
+                                        <a>{{ space.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" ng-show="uploadFrm.importResults==null" style="padding-bottom: 0px">
+                            <table  width="100%" style="    border-collapse: separate;border-spacing: 5px;">
+                                <tr>
+                                    <td colspan="2" >
+                                        <label>
+                                            <input type="radio" ng-click="onChangeSearchType()" name="searchType" ng-value="uploadFrm.queryType" checked ng-model="uploadFrm.searchType" />
+                                            <b>Query String</b>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" >
+                                        <textarea id="searchQuery" ng-model="uploadFrm.searchQuery" ng-disabled="uploadFrm.searchType!=uploadFrm.queryType" style="resize:none" class="form-control col-sm-8" ng-model="searchString" rows="3" placeholder="Enter some words or a sentence"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" >
+                                        <label>
+                                            <input type="radio" ng-click="onChangeSearchType()" name="searchType" ng-value="uploadFrm.fileType" ng-model="uploadFrm.searchType" />
+                                            <b>Select a file (.pdf / .doc)</b>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="uploadFileName" width="80%" >
+                                        <input type="text" onkeydown="return false" onclick="$('#btnBrowser').click()" ng-disabled="uploadFrm.searchType!=uploadFrm.fileType" ng-value="uploadFrm.fileName | cut:true:60:'...'" class="col-md-12 form-control">
+                                    </td>
+                                    <td width="20%" align="right" >
+                                        <span class="btn btn-file btn-default">
+                                            <span class="importStatus fa fa-folder-open"></span>
+                                            Browse... <input id="btnBrowser" ng-disabled="uploadFrm.searchType!=uploadFrm.fileType" type="file" file-reader="uploadFrm.fileContent" file-directive="uploadFrm.myFile" accept=".pdf, .doc" style="width: 100px;height: 25px" />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" >
+                                        <label>
+                                            <input type="radio" ng-click="onChangeSearchType()" name="searchType" ng-value="uploadFrm.urlType"  ng-model="uploadFrm.searchType" />
+                                            <b>URL</b>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" valign="top">
+                                        <input name="url" ng-model="uploadFrm.searchUrl" type="url" class="form-control" ng-disabled="uploadFrm.searchType!=uploadFrm.urlType" />
+                                        <span ng-show="myForm.url.$invalid" class="red fa"> Not valid URL</span>
+                                   </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input ng-disabled="!(shared.space && (uploadFrm.searchQuery || uploadFrm.searchUrl || uploadFrm.myFile ) )" class="btn btn-action" type="submit" value="Search" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="modal fade" id="viewDocumentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 90%;height: auto;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <span id="docLoadingModal" class="fa fa-refresh glyphicon-refresh-animate"></span>&nbsp;
+                <span>{{(activeDocumentModalModal.title || activeDocumentModal.description) | cut:true:100:'...'}}</span>
+                <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close" style="margin-top: -7px;">
+                    <span class="fa fa-close"></span>
+                </button>
+                <a ng-if="activeDocumentModal.url" href="{{activeDocumentModal.url}}" target="_blank">
+                    <button type="button" class="pull-right btn btn-action" title="Open in new window" style="margin-right: 5px; margin-top: -7px;">
+                    <span class="fa fa-external-link"></span>
+                </button>
+                </a>
+            </div>
+
+            <div class="modal-body" style="padding: 0px;">
+                    <iframe  id="frameContentModal" width="100%" height="500" onload="$('#docLoadingModal').hide(); this.height=(window.innerHeight-100)" sandbox=""></iframe>
+            </div>
+            <!--
+            <div class="modal-footer">
+                <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">Close</button>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

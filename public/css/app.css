@@ -1,0 +1,220 @@
+@font-face {
+    font-family: "Orbitron";
+    src: url("../fonts/Orbitron-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "EdwardianScriptITC";
+    src: url("../fonts/EdwardianScriptITC.ttf") format("truetype");
+}
+
+.panel{
+    /*margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 1em;*/
+    border:1px solid #c1c1c1;
+    margin-bottom:0;
+}
+.row{margin-top:0!important;}
+
+.login-row{
+    width:100%;
+    background-color:#000;
+    height:2em;
+    line-height:2em;
+    color:#eaeaea;
+    position:fixed;
+    top:0;left:0;
+    z-index:999;
+}
+#login-btn{cursor:pointer;}
+
+.hidden{
+    display: none;
+}
+.btn{background-image:none;background-color:#eaeaea;border-radius:2px;}
+.btn[disabled]{background-color:#1B84B6;}
+.wizard-active{background-color:#009FE3;color:#FFF;}
+
+.info{margin-left:1em;margin-right:1em;margin-top:1em;font-size:1.2em;}
+.info-block{border:1px solid #c1c1c1;padding:0.5em;border-radius:3px;margin-top:1em;}
+
+.btn-action{background-color:#009FE3;color:#FFF;}
+.btn-action:hover{color:#444;}
+.action{color:#009FE3;}
+
+.btn-subaction{background-color:#444;color:#FFF;}
+.btn-subaction:hover,.btn-subaction.active{background-color:#009FE3;color:#FFF;}
+
+.btn-item{background-color:#eaeaea;border:1px solid #c1c1c1;color:#444;margin:0.5em;}
+.btn-item:hover,.btn-item.active{background-color:#009FE3;color:#FFF;box-shadow:none;}
+
+.panel-heading,.modal-header{background-color:#444;color:#eaeaea;border-bottom:1px solid #c1c1c1;font-weight:bold;}
+.badge{margin-left:1em;border-radius:0;background-color:#444;}
+
+.doc-bloc{border-bottom:2px solid #eaeaea;margin-bottom:1em;}
+/*.doc-bloc div{margin-bottom:0.5em;}*/
+
+.clear{clear:both;}
+
+.table-hover tbody tr:hover a,
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th{
+    background-color: #009FE3;color:#FFF; cursor:pointer;
+}
+.blue{color:#009FE3 !important;}
+.darkblue{color:#0000FF !important;}
+.red{color:red;}
+.tabContent{
+    border-right:1px solid #eaeaea;
+    border-left:1px solid #eaeaea;
+    border-bottom:1px solid #eaeaea;
+    border-radius:3px;
+    padding-top:1em;
+}
+
+.table > tbody > tr.active a,
+.table > tbody > tr.active th,
+.table > tbody > tr.active td,
+.table > tbody > tr.active:hover a,
+.table > tbody > tr.active:hover th,
+.table > tbody > tr.active:hover td{
+    background-color: #009FE3;color:#FFF;cursor:pointer;
+}
+
+.table > tbody > tr.disabled th,
+.table > tbody > tr.disabled td,
+.table > tbody > tr.disabled:hover th ,
+.table > tbody > tr.disabled:hover td {
+     cursor: default !important;
+    background-color: inherit;
+    color: inherit;
+ }
+
+/* fix nya-bs-select */
+.dropdown-header{display:block!important;}
+/* hau fix*/
+.dropdown-menu > .active > a {
+    background-color:#fff;
+    color: #333;
+}
+@media (min-width:768px) {
+	.modal-dialog2 {
+        width: 780px;
+        margin: 30px auto;
+    }
+    .modal-dialog3 {
+        width: 1200px;
+        margin: 30px auto;
+    }
+}
+
+.btn.tag{
+    margin:0 0.5em 0.5em 0;
+}
+
+.btn.tag.nohover:hover {
+    background: #eaeaea;
+    cursor: default;
+    border-color: #ccc;
+}
+
+#btnPreviewSource {
+    position: absolute;
+    bottom: 3.5em;
+    right: 2.5em;
+}
+
+#framePreview {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    padding: 1em 0;
+}
+/**/
+.navbar-default .navbar-nav>.active>a {
+  color: blue !important;
+  background: red !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.doc-desc{
+	color:#808080;
+}
+.box{
+	border:1px solid #c1c1c1;
+	padding:0.5em;
+	border-radius:2px;
+}
+.text-link{
+    color: #006621;
+}
+/* fix angular datepicker on chrome*/
+.datepicker{
+    z-index:9000 !important;
+}
+label.btn-default.active{
+    background-color: #009fe3 !important;
+    color: #fff !important;
+    border-color: #009fe3 !important;
+}
+#searchString{
+    width: 100%;
+    height: 34px;
+    border-radius: 15px;
+    min-width: 150px;
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+.pointer{
+    cursor: pointer;
+}
+
+input[type="file"]:disabled {
+    cursor: no-drop;
+}
+.fancytree-subtitle{
+    color:darkgray;
+}
+.text-shadown{
+    text-shadow: 2px 2px #0088cc;
+}
+.disabled{
+    cursor: no-drop;
+}
+.white{
+    color: white;
+}
+.navbar-nav > li{
+    margin-right: 5px;
+}

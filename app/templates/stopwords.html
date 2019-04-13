@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading"><span class="fa fa-2x fa-cog"> Stop Word Settings</span></div>
+            <div class="panel-body">
+                <form ng-submit="updateStopWords()">
+                    <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Label</th>
+                            <th>Number of Stop words</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <!--<tr>
+                              <td> test </td>
+                              <td> 5 </td>
+                              <td> button </td>
+                          </tr>-->
+                            <tr ng-repeat="list in stopWordListsSepllings">
+                                <td>{{list.id}}</td>
+                                <td>{{list.label}}</td>
+                                <td>
+                                    {{list.spellings.length}}
+                                </td>
+                                <td>
+                                  <button type="button" ng-click="editStopWordsList(list.id)" class="btn btn-action">
+                                      <span class="fa fa-edit"></span> View & Edit
+                                  </button>
+                                  <button type="button" ng-click="deleteStopWordsList(list.id)" class="btn btn-action">
+                                      <span class="fa fa-close"></span> Delete
+                                  </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pull-right" style="margin-top:1em;">
+                        <button type="button" class="btn btn-action" ng-click="addStopWordList()">
+                            <span class="fa fa-save"></span> Add
+                        </button>
+                        <a href="#/home"><button type="submit" class="btn btn-action">
+                            <span class="fa fa-close"></span> Close
+                        </button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- this stop words edit dialogue -->
+    <!--<div ng-controller="stopWordsController">-->
+        <div class="modal fade" id="editStopWordsModal" tabindex="-1" role="dialog" aria-hidden="true" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <h4 class="modal-title">Edit Stop Words</h4>
+                    </div>
+
+                    <div class="modal-body" >
+
+                        <table width="100%" style="border-collapse: separate;border-spacing: 5px;">
+                            <tr><td><b>Stop Words List Label:</b></td></tr>
+                            <tr>
+                                <td><input type="text" ng-required="true"
+                                    class="autoFocus form-control"
+                                    ng-model="editStopWordsFrm.label" >
+                                </td>
+                            </tr>
+                            <tr><td><b>Stop Words In the List</b></td></tr>
+                            <tr>
+                                <td>
+                                    <!--<div style="height: 200px; overflow: scroll;">-->
+                                      <!--<p editable-textarea="editStopWordsFrm.stopWords" e-rows="24" e-cols="50">
+                                        <pre>{{ editStopWordsFrm.stopWords || 'no stop words' }}</pre>
+                                    </p>-->
+                                    <textarea name="stopWords" ng-model="editStopWordsFrm.stopWords" required="true"
+                                    style="height:350px; width:100%; overflow:scroll;"> </textarea>
+                                <!--</div>-->
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-disabled="!(editStopWordsFrm.label)" type="button" class="btn btn-action" ng-click="updateStopWords()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- this is add stop word List and edit dialogue -->
+        <!--<div ng-controller="stopWordsController">-->
+            <div class="modal fade" id="newStopWordListModal" tabindex="-1" role="dialog" aria-hidden="true" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                                <span class="fa fa-close"></span>
+                            </button>
+                            <h4 class="modal-title">Add and Edit Stop Word List</h4>
+                        </div>
+
+                        <div class="modal-body" >
+
+                            <table width="100%" style="border-collapse: separate;border-spacing: 5px;">
+                                <tr><td><b>Stop Word List Label:</b></td></tr>
+                                <tr>
+                                    <td><input type="text" ng-required="true"
+                                        class="autoFocus form-control"
+                                        ng-model="newStopWordsFrm.label" >
+                                    </td>
+                                </tr>
+                                <tr><td><b>Stop Words in the List</b></td></tr>
+                                <tr>
+                                    <td>
+                                        <!--<div style="height: 200px; overflow: scroll;">-->
+                                          <!--<p editable-textarea="editStopWordsFrm.stopWords" e-rows="24" e-cols="50">
+                                            <pre>{{ editStopWordsFrm.stopWords || 'no stop words' }}</pre>
+                                        </p>-->
+                                        <textarea name="stopWords" ng-model="newStopWordsFrm.stopWords" required="true"
+                                        style="height:350px; width:100%; overflow:scroll;"> </textarea>
+                                    <!--</div>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button ng-disabled="!(newStopWordsFrm.label)" type="button" class="btn btn-action" ng-click="onAddStopWordList()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- confirmation dialogue for deleting stop words list -->
+        <div class="modal fade" id="deleteStopWordListModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <!--<form class="form-horizontal" ng-submit="onConfirmDelete()">-->
+                 	<div class="modal-header">
+                        <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <h4 class="modal-title" >Confirm Delete</h4>
+
+                    </div>
+                    <div class="modal-body">
+        				<div class="form-group">
+                            <div class="col-sm-1"><span class="fa fa-2x fa-question-circle blue"></span></div>
+                            <div class="col-sm-11"><label>Do you really want to delete the following Stop Words List?</label></div><br/>
+                            <label> Label: {{deleteStopWordsFrm.label}}, Id:{{deleteStopWordsFrm.id}}, Num. of stop words:{{deleteStopWordsFrm.num}} </label>
+        				</div>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-action" type="button" value="Cancel" data-dismiss="modal" />
+                        <input class="btn btn-action" type="button" value=" OK " ng-click="onDeleteStopWordList(deleteStopWordsFrm.id)"/>
+                    </div>
+                <!--</form>-->
+            </div>
+        </div>
+        </div>
+
+</div>
+<br/>

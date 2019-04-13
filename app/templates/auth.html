@@ -1,0 +1,52 @@
+<div class="nopadding">
+    <div class="col-md-12 nopadding">
+        <div class="panel nopadding">
+            <div class="panel-body">
+              <div class="col-md-12 text-center" style="font-size: 2.5em; padding-top: 0.5em">
+              <img src="public/image/semde_logo_small.jpg" class="img-rounded"/>
+            </div>
+                <div class="col-md-4 col-md-offset-4" style="margin-top:5em;" >
+                	<span class="fa fa-info-circle --fa-2x red"  ng-if="error"> {{error}}</span>
+                	<br/>
+
+                    <form ng-submit="checkAuth()" ng-keypress="error=null">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="fa fa-user"></span></div>
+                                <input type="text" ng-model="username" class="form-control" id="username" placeholder="Enter user name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="fa fa-lock"></span></div>
+                                <input type="password" ng-model="password" class="form-control" id="password" placeholder="Enter your password">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-action" ng-disabled="!username || !password">
+                            <span class="fa fa-sign-in"></span> Login
+                        </button>
+                        <a href="#/signup">
+                        <button type="button" class="btn btn-action" >
+                            <span class="fa fa-user"></span> Sign-Up
+                        </button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-12 text-center" style="font-size: 2.5em; padding-top: 1em; font-family: EdwardianScriptITC">-->
+            <div class="col-md-12 text-center" style="font-size: 2.5em; padding-top: 1em">
+              <!--<p><b>&#171; The textual contents are already all around you and it will be increasingly more so.
+                  <br/>You can choose either to be overwhelmed and become inefficient in chaos or
+                  <br/>tame them and harness the power by extracting the hidden knowledge
+                  <br/>to become more effective in your activity.  &#187;</b>
+              </p>-->
+              <!--<p>Welcome to <span style=" font-size: 1em; font-family:'Times New Roman', Times, serif;">SEMDEE</span></p>-->
+              <p> <span style=" font-size: 1em; font-family:'Times New Roman', Times, serif;">Plate-forme de cognition artificielle</span></p>
+              <!--<p> Your Unlimited Acces to Knowledge </p>-->
+              <img src="public/image/semde_logo_poweredby.png" class="img-rounded"/>
+              <!--<p class="text-right" style="margin: 1em 1em" ><b>Welcome to &#171; <span style=" font-size: 1em; font-family:'Times New Roman', Times, serif;"><i>SEMDEE</i></span>&#187; your artificial cognitive platform.</b></p>-->
+          </div>
+        </div>
+   </div>
+</div>

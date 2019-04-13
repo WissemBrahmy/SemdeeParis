@@ -1,0 +1,138 @@
+<!-- ************************************************************************-->
+<!-- ************************************************************************-->
+<!--                         Crawl Account Settings                          -->
+<!--                         Crawl Account Settings                          -->
+<!--                         Crawl Account Settings                          -->
+<!-- ************************************************************************-->
+<!-- ************************************************************************-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading"><span class="fa fa-2x fa-cog"> Account Settings</span></div>
+            <div class="panel-body">
+                <form ng-submit="updateAllAccountParams()">
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <!--                       Twitter Account Settings                          -->
+                  <!--                       Twitter Account Settings                          -->
+                  <!--                       Twitter Account Settings                          -->
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <div class="panel-heading"><span class="fa fa-2x fa-cog"> Twitter Parameters </span></div>
+                  <div class="panel-body">
+                    <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="!twitterParameters">
+                        <thead>
+                        <tr>
+                            <th>Parameter name</th>
+                            <th>Parameter value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="param in twitterParameters" >
+                                <td>{{param.paramName}}</td>
+                                <td>
+                                    <input type="text" class="form-control" ng-model="twitterParameters[$index].paramValue" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <!--                         Facebook Account Settings                       -->
+                  <!--                         Facebook Account Settings                       -->
+                  <!--                         Facebook Account Settings                       -->
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <div class="panel-heading"><span class="fa fa-2x fa-cog"> Facebook Parameters </span></div>
+                  <div class="panel-body">
+                    <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="!bingParameters">
+                        <thead>
+                        <tr>
+                            <th>Parameter name</th>
+                            <th>Parameter value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="param in facebookParameters" >
+                                <td>{{param.paramName}}</td>
+                                <td>
+                                    <input type="text" class="form-control" ng-model="facebookParameters[$index].paramValue" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <!--                        Google Account Settings                          -->
+                  <!--                        Google Account Settings                          -->
+                  <!--                        Google Account Settings                          -->
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <div class="panel-heading"><span class="fa fa-2x fa-cog"> Google Parameters </span></div>
+                  <div class="panel-body">
+                    <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="!googleParameters">
+                        <thead>
+                        <tr>
+                            <th>Parameter name</th>
+                            <th>Parameter value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="param in googleParameters" >
+                                <td>{{param.paramName}}</td>
+                                <td>
+                                    <input type="text" class="form-control" ng-model="googleParameters[$index].paramValue" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <!--                         Bing Account Settings                           -->
+                  <!--                         Bing Account Settings                           -->
+                  <!--                         Bing Account Settings                           -->
+                  <!-- ************************************************************************-->
+                  <!-- ************************************************************************-->
+                  <div class="panel-heading"><span class="fa fa-2x fa-cog"> Bing Parameters </span></div>
+                  <div class="panel-body">
+                    <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="!bingParameters">
+                        <thead>
+                        <tr>
+                            <th>Parameter name</th>
+                            <th>Parameter value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="param in bingParameters" >
+                                <td>{{param.paramName}}</td>
+                                <td>
+                                    <input type="text" class="form-control" ng-model="bingParameters[$index].paramValue" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+
+                    <div class="pull-right" style="margin-top:1em;">
+                      <!--<button type="submit" class="btn btn-action">
+                          <span class="fa fa-save"></span> Test connection
+                      </button>
+                        <button type="submit" class="btn btn-action">
+                            <span class="fa fa-save"></span> Delete
+                        </button>-->
+                        <button type="submit" class="btn btn-action">
+                            <span class="fa fa-save"></span> Save
+                        </button>
+                        <a href="#/home"><button type="submit" class="btn btn-action">
+                            <span class="fa fa-close"></span> Cancel
+                        </button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>

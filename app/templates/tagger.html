@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">Tagger</div>
+            <div ng-hide="!shared.spaces">
+                <div class="panel-body" >
+                    Select a semantic space to work on :
+                    <ol class="nya-bs-select" ng-model="shared.space" data-live-search="true"
+                        title="Select a semantic space" data-size="10" ng-change="activeTagger = undefined">
+                        <li nya-bs-option="space in shared.spaces">
+                            <a>{{ space.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                        </li>
+                    </ol>
+                    <button type="button" class="btn btn-action" ng-click="launchTagger()" ng-disabled="!shared.space">
+                        Launch tagger <span class="fa fa-arrow-right" />
+                    </button>
+                    <span ng-show="isLoading" class="btn btn-default disabled">
+                        <img src="public/image/loader.gif" alt="" />
+                    </span>
+                </div>
+                <div class="panel-body" ng-show="shared.space"  >
+                    <form ng-submit="launchLink()">
+                        <input type="text" ng-model="link" class="form-control" style="width:50%;float:left;margin-right:4px" placeholder="Enter a text or an URL"  ng-readonly="!shared.space" />
+                        <button ng-disabled="!link" type="submit" class="btn btn-action" >
+                            Launch tagger with external document <span class="fa fa-arrow-right" />
+                        </button>
+                        <span ng-show="isLoadingLink" class="btn btn-default disabled">
+                            <img src="public/image/loader.gif" alt="" />
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="activeTagger">
+    <div class="row">
+        <div class="col-md-8" >
+            <div class="panel">
+                <div class="panel-heading"><h3 class="panel-title">Tags</h3></div>
+                <div class="panel-body">
+                    <chart chart-show-types="false" chart-data="chart.data" chart-title="chart.title" chart-type="chart.type" chart-available-types="cloud-chart"></chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>

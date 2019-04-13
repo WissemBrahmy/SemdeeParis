@@ -1,0 +1,185 @@
+/**
+ * ANGULAR LOADING BAR
+ **/
+
+/* Reset styles */
+
+#loading-bar-spinner {
+  display: inline;
+  position: static;
+  z-index: auto;
+  pointer-events: auto;
+  -webkit-pointer-events: all 0 ease 0;
+  -webkit-transition: all 0 ease 0;
+  -moz-transition: all 0 ease 0;
+  -o-transition: all 0 ease 0;
+  transition: all 0 ease 0;
+  top:auto;
+  left:auto;
+  height:auto;
+  width:auto;
+  background-color:inherit;
+  opacity:1;
+}
+
+#loading-bar-spinner .spinner-icon {
+  width: auto;
+  height: auto;
+  border:  none;
+  border-top-color: inherit;
+  border-left-color: inherit;
+  border-radius: 0;
+  -webkit-animation: none 0 ease 0 1 normal none running;
+  -moz-animation:    none 0 ease 0 1 normal none running;
+  -ms-animation:     none 0 ease 0 1 normal none running;
+  -o-animation:      none 0 ease 0 1 normal none running;
+  animation:         none 0 ease 0 1 normal none running;
+}
+
+/** Nextoo Customization **/
+#loading-bar-spinner {
+    top:0px;
+    left:0px;
+    position:fixed;
+    z-index:999999;
+    height:100%;
+    width:100%;
+    background-color:#000000;
+    opacity:0.5;
+}
+
+/**
+ * NG DIALOG
+ **/
+.ngdialog.ngdialog-theme-plain .ngdialog-content {
+    width: 60%;
+    /*height: 100%;*/
+}
+.ngdialog.ngdialog-theme-plain.ngdialog-iframe-custom{
+	padding-bottom: 10px !important;
+  	padding-top: 10px !important;
+}
+.ngdialog.ngdialog-theme-plain.ngdialog-iframe-custom  .ngdialog-content{
+	width: 90%;
+    height: auto;
+    border: 5px solid #444;
+}
+/*******************hau copy from semdee.zip */
+#loading-bar {
+    pointer-events: none;
+    -webkit-pointer-events: none;
+    -webkit-transition: 350ms linear all;
+    -moz-transition: 350ms linear all;
+    -o-transition: 350ms linear all;
+    transition: 350ms linear all;
+}
+
+#loading-bar-spinner.ng-enter,#loading-bar-spinner.ng-leave.ng-leave-active,#loading-bar.ng-enter,#loading-bar.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+#loading-bar-spinner.ng-enter.ng-enter-active,#loading-bar-spinner.ng-leave,#loading-bar.ng-enter.ng-enter-active,#loading-bar.ng-leave {
+    opacity: 1;
+}
+
+#loading-bar .bar {
+    -webkit-transition: width 350ms;
+    -moz-transition: width 350ms;
+    -o-transition: width 350ms;
+    transition: width 350ms;
+    background: #29d;
+    position: fixed;
+    z-index: 10002;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    border-bottom-right-radius: 1px;
+    border-top-right-radius: 1px;
+}
+
+#loading-bar .peg {
+    position: absolute;
+    width: 70px;
+    right: 0;
+    top: 0;
+    height: 5px;
+    opacity: .45;
+    -moz-box-shadow: #29d 1px 0 6px 1px;
+    -ms-box-shadow: #29d 1px 0 6px 1px;
+    -webkit-box-shadow: #29d 1px 0 6px 1px;
+    box-shadow: #29d 1px 0 6px 1px;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+@-webkit-keyframes loading-bar-spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes loading-bar-spinner {
+    0% {
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes loading-bar-spinner {
+    0% {
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes loading-bar-spinner {
+    0% {
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loading-bar-spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#loading-bar-spinner {
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    opacity: .5;
+}
+/*******************end hau copy from semdee.zip */

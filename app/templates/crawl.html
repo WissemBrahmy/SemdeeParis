@@ -1,0 +1,293 @@
+<!-- Area displaying a list of cognitive spaces AND crawls of the user !-->
+
+<div ng-controller="crawlController">
+
+<div ng-if="false" class="row" id="semanticSpacesList" ng-if="showCrawlsList" >
+    <!-- Crawls list -->
+    <div class="col-md-12">
+        <div class="panel" >
+            <div class="panel-heading">Crawls
+                <div class="btn-group pull-right">
+                    <a href ng-click="launchNewCrawl()" title="Launch a new crawl" class="btn btn-action btn-xs"><span class="fa fa-plus"></span></a>
+                    <a style="margin-left:3px" href ng-click="changeList()" title="Schedule the Crawls" class="btn btn-action btn-xs"><span class="fa fa-clock-o"></span></a>
+                </div>
+            </div>
+            <div class="panel-body" >
+                <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="crawls | toArray | isEmpty">
+                    <thead>
+                    <tr>
+                        <th colspan="4" style="background-color:#444">
+                            <input type="text" class="form-control" placeholder="Filter crawls by name" ng-model="search2.query" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width:4%" class="text-center">#</th>
+                        <th>Query</th>
+                        <th style="width:20%">
+                            Date
+                            <span style="cursor:pointer" class="fa fa-caret-up pull-right" ng-click="predicate = 'beginDate'; reverse=false"></span>
+                            <span style="cursor:pointer" class="fa fa-caret-down pull-right" ng-click="predicate = 'beginDate'; reverse=true"></span>
+                        </th>
+                        <th style="width:5%">Volume</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr dir-paginate="crawl in crawls | toArray | filter: search2 |  orderBy:predicate:reverse | itemsPerPage : 10" pagination-id="crawlsPage"
+                            ng-click="crawl.status != 2 || getCrawlResult(crawl)" ng-class="{ active : activeCrawl.id == crawl.id, disabled: crawl.status != 2 }">
+                        <td class="text-right">{{crawl.id}}</td>
+                        <td>{{crawl.query}}</td>
+                        <td class="text-center">{{crawl.beginDate | date :'MM-dd-yyyy HH:mm:ss'}}</td>
+                        <td class="text-right">
+                            <span ng-show="crawl.status != 2">
+                                <img src="public/image/loader.gif" />
+                            </span>
+                            {{crawl.volume}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <dir-pagination-controls pagination-id="crawlsPage"></dir-pagination-controls>
+                </div>
+                <div class="alert alert-warning" ng-show="crawls | toArray | isEmpty">No crawl yet! Please launch one.</div>
+            </div>
+        </div>
+    </div>
+</div ng-sh>
+<div ng-if="false" class="row" >
+    <div class="col-md-12" ng-show="activeCrawl && showCrawlsList" id="documentsList">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Documents of crawl {{activeCrawl.query}} ({{activeCrawl.id}})</h3>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-warning" ng-show="documents.length == 0">No documents found for this crawl.</div>
+                <div dir-paginate="doc in documents | itemsPerPage: 10" pagination-id="docList" current-page="currentPageDocsList">
+                    <div class="col-md-12 doc-bloc">
+                        <ng-include src="'app/templates/documentDescPartial.html'"></ng-include>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <dir-pagination-controls pagination-id="docList"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="false" class="row" ng-if="!showCrawlsList">
+    <!-- Schedule Crawls list -->
+    <div class="col-md-12">
+        <div class="panel" >
+            <div class="panel-heading">Schedule the Crawls
+                <div class="btn-group pull-right">
+                    <a style="margin-left:3px"href ng-click="changeList()" title="Crawls" class="btn btn-action btn-xs"><span class="fa fa-filter"></span></a>
+                </div>
+            </div>
+            <div class="panel-body" >
+                <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;" ng-hide="schedules | toArray | isEmpty">
+                    <thead>
+                    <tr>
+                        <th style="width:3%" class="text-center">#</th>
+                        <th>Schedule Name</th>
+                        <th style="width:18%" >Launching Date/Time</th>
+                        <th style="width:18%" >Sources</th>
+                        <th style="width:10%">Duration</th>
+                        <th style="width:18%">Reccurence
+                            <p style="font-size:11px;font-weight:normal" class="text-center">Minute / Hour / Day / Week / Month </p>
+                        </th>
+                        <th style="width:8%">Volume</th>
+                        <th style="width:5%" >Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr dir-paginate="schedule in schedules | toArray | itemsPerPage : 10" pagination-id="schedulesPage"
+                        ng-click="" ng-class="">
+                        <td class="text-right">{{schedule.id}}</td>
+                        <td>{{schedule.query}}</td>
+                        <td class="text-center">{{schedule.beginDate | date :'MM-dd-yyyy HH:mm:ss'}}</td>
+                        <td ></td>
+                        <td class="text-right">{{schedule.duration}}</td>
+                        <td >{{schedule.minute}} {{schedule.hour}} {{schedule.daymonth}} {{schedule.dayweek}} {{schedule.month}} </td>
+                        <td class="text-right">
+                            <span ng-show="schedule.status != 3"><img src="public/image/loader.gif" /></span>
+                             {{schedule.volume}}
+                        </td>
+                        <td class="text-center">
+                            <a title="Delete schedule" class="btn btn-subaction btn-xs" ng-click="deleteSchedule(schedule)">
+                                <span class="fa fa-remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <dir-pagination-controls pagination-id="schedulesPage"></dir-pagination-controls>
+                </div>
+                <div class="alert alert-warning" ng-show="schedules | toArray | isEmpty">No schedule crawl yet! Please launch one.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal launching a new crawl -->
+<div class="modal fade" id="launchNewCrawlModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" ng-submit="validateLaunchNewCrawl()">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Crawl</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="query" class="col-sm-3 control-label">Search String</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="query" name="query" ng-required="true"  ng-model="crawlForm.query" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sources" class="col-sm-3 control-label">Sources</label>
+                        <div class="col-sm-9">
+                            <ol id="sources" class="nya-bs-select form-control"
+                                ng-model="crawlForm.sources" data-live-search="true"
+                                title="Choose sources to crawl" data-size="10" multiple>
+                                <li nya-bs-option="source in sources" ng-click="launchParams(source, $event)" >
+                                    <a><span>{{source.label}}</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Add to schedule button is disabled temporarily -->
+                    <!--<input class="btn btn-action" type="button" value="Add to schedule" ng-disabled="form.$invalid || crawlForm.sources.length == 0 || crawlForm.query ==null " ng-click="launchNewSchedule()" />-->
+                    <input class="btn btn-action" type="submit" value="Launch!" ng-disabled="form.$invalid || crawlForm.sources.length == 0  || crawlForm.query ==null " />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal launching parametters -->
+<div class="modal fade" id="crawlParamsModal" tabindex="-2" role="dialog" aria-hidden="true">
+	<ng-include src="'app/templates/crawlParamsModal.html'"></ng-include>
+</div>
+<!-- Modal launching a new schedule -->
+<div class="modal fade" id="launchNewScheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" ng-submit="validateLaunchNewSchedule()">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Add to schedule</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="minutes" class="col-sm-3 control-label">Minute</label>
+                        <div class="col-sm-9">
+                            <ol class="nya-bs-select form-control" id="minutes" ng-model="scheduleForm.minute" data-live-search="true" title="Choose minute" data-size="7" >
+                                <li nya-bs-option="min in minutes" >
+                                    <a><span>{{min.label}}</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hours" class="col-sm-3 control-label">Hour</label>
+                        <div class="col-sm-9">
+                            <ol class="nya-bs-select form-control" id="hours" ng-model="scheduleForm.hour" data-live-search="true" title="Choose hour" data-size="7" >
+                                <li nya-bs-option="h in hours" >
+                                    <a><span>{{h.label}}</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="daymonth" class="col-sm-3 control-label">Day</label>
+                        <div class="col-sm-9">
+                            <ol class="nya-bs-select form-control" id="daymonth" ng-model="scheduleForm.daymonth" data-live-search="true" title="Choose day month" data-size="7" >
+                                <li nya-bs-option="dm in daymonths" >
+                                    <a><span>{{dm.label}}</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dayweek" class="col-sm-3 control-label">Week</label>
+                        <div class="col-sm-9">
+                            <ol class="nya-bs-select form-control" id="dayweek" ng-model="scheduleForm.dayweek" data-live-search="true" title="Choose week" data-size="7" >
+                                <li nya-bs-option="w in dayweeks" >
+                                    <a><span>{{w.label}}</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="month" class="col-sm-3 control-label">Month</label>
+                        <div class="col-sm-9">
+                            <ol class="nya-bs-select form-control" id="month" ng-model="scheduleForm.month" data-live-search="true" title="Choose month" data-size="7" >
+                                <li nya-bs-option="m in months" >
+                                    <a><span>{{m.label}}</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-action" type="submit" value="Launch!" ng-disabled="form.$invalid || crawlForm.sources.length == 0  || crawlForm.query ==null " />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal clone a crawl -->
+<div class="modal fade" id="cloneCrawlModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" ng-submit="validateCreateNewCrawlFromOldCrawl()">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Crawl</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="label" class="col-sm-4 control-label">Original Data Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="label" name="label" ng-required="true" ng-model="crawlForm.label" aria-required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="crawls" class="col-sm-4 control-label">Original Data</label>
+                        <div class="col-sm-8">
+                            <ol id="crawls" class="nya-bs-select form-control"
+                                ng-model="crawlForm.crawls" data-live-search="true"
+                                title="Select a original data" data-size="10" multiple >
+                                <li nya-bs-option="crawl in crawls | toArray | filter: {status: 2}" >
+                                    <a>
+                                        <span>{{crawl.query}}</span>
+                                        <small>({{crawl.volume}} docs)</small>
+                                        <span class="glyphicon glyphicon-ok check-mark"></span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-action" type="submit" ng-disabled="!crawlForm.label || crawlForm.crawls.length == 0">
+                        <span class="fa fa-save"></span> Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>

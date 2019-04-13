@@ -1,0 +1,9 @@
+<a href ng-click="goToDocument(doc)" title="Navigate to source"><span style="font-weight:bold">{{doc.title}}</span></a>
+<div ng-show="doc.url" class="text-link">{{doc.url}}</div>
+<div>{{doc.description | limitTo : 100}}</div>
+<div class="doc-desc">
+    <span ng-show="doc.author != null && doc.author != ''"><b>author</b>:{{doc.author}}</span>
+    <span ng-show="doc.eDate != null && doc.eDate != ''"> <b>- date</b>:{{doc.eDate | date :'MM-dd-yyyy'}}</span>
+    <span ng-show="doc.shortDescription != null && doc.shortDescription != ''"> <b>- description</b>:{{doc.shortDescription  | limitTo : 100}}</span>
+    <span ng-show="doc.source != null && doc.source != ''"> <b>- source</b>:{{doc.source}}</span>
+</div>

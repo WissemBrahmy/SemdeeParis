@@ -1,0 +1,235 @@
+<div ng-controller="regexController">
+
+
+
+<div class="row">
+    <div class="col-md-12" >
+        <div class="panel">
+            <div class="panel-heading"><span class="fa fa-2x fa-cog"> Personal Data Settings</span></div>
+            <div class="panel-body">
+                <form ng-submit="updateRegexes()">
+                    <table class="table table-striped table-condensed table-bordered table-hover" style="width:100%;margin-bottom:0;">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Label</th>
+                            <th>Number of Patterns</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <!--<tr>
+                              <td> test </td>
+                              <td> 5 </td>
+                              <td> button </td>
+                          </tr>-->
+                            <tr ng-repeat="list in regexListsSepllings">
+                                <td>{{list.id}}</td>
+                                <td>{{list.label}}</td>
+                                <td>
+                                    {{list.spellings.length}}
+                                </td>
+                                <td>
+                                  <button type="button" ng-click="editRegexesList(list.id)" class="btn btn-action">
+                                      <span class="fa fa-edit"></span> View & Edit
+                                  </button>
+                                  <button type="button" ng-click="deleteRegexesList(list.id)" class="btn btn-action">
+                                      <span class="fa fa-close"></span> Delete
+                                  </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pull-right" style="margin-top:1em;">
+                        <button type="button" class="btn btn-action" ng-click="addRegexList()">
+                            <span class="fa fa-save"></span> Add
+                        </button>
+                        <a href="#/home"><button type="submit" class="btn btn-action">
+                            <span class="fa fa-close"></span> Close
+                        </button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- this stop words edit dialogue -->
+    <!--<div ng-controller="stopWordsController">-->
+        <div class="modal fade" id="editRegexesModal" tabindex="-1" role="dialog" aria-hidden="true" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <h4 class="modal-title">Edit Personal Data List</h4>
+                    </div>
+
+                    <div class="modal-body" >
+
+                        <table width="100%" style="border-collapse: separate;border-spacing: 5px;">
+                            <tr><td><b>Personal Data List Label:</b></td></tr>
+                            <tr>
+                                <td><input type="text" ng-required="true"
+                                    class="autoFocus form-control"
+                                    ng-model="editRegexesFrm.label" >
+                                </td>
+                            </tr>
+                            <tr><td><b>Personal Data Patterns in the List</b></td></tr>
+                            <tr>
+                                <td>
+                                    <!--<div style="height: 200px; overflow: scroll;">-->
+                                      <!--<p editable-textarea="editStopWordsFrm.stopWords" e-rows="24" e-cols="50">
+                                        <pre>{{ editStopWordsFrm.stopWords || 'no stop words' }}</pre>
+                                    </p>-->
+                                    <textarea name="regexes" ng-model="editRegexesFrm.regexes" required="true"
+                                    style="height:350px; width:100%; overflow:scroll;"> </textarea>
+                                <!--</div>-->
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-disabled="!(editRegexesFrm.label)" type="button" class="btn btn-action" ng-click="updateRegexes()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- this is add stop word List and edit dialogue -->
+        <!--<div ng-controller="stopWordsController">-->
+            <div class="modal fade" id="newRegexListModal" tabindex="-1" role="dialog" aria-hidden="true" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                                <span class="fa fa-close"></span>
+                            </button>
+                            <h4 class="modal-title">Add and Edit Personal Data List</h4>
+                        </div>
+
+                        <div class="modal-body" >
+
+                            <table width="100%" style="border-collapse: separate;border-spacing: 5px;">
+                                <tr><td><b>Personal Data List Label:</b></td></tr>
+                                <tr>
+                                    <td><input type="text" ng-required="true"
+                                        class="autoFocus form-control"
+                                        ng-model="newRegexesFrm.label" >
+                                    </td>
+                                </tr>
+                                <tr><td><b>Personal Data Patterns in the List</b></td></tr>
+                                <tr>
+                                    <td>
+                                        <!--<div style="height: 200px; overflow: scroll;">-->
+                                          <!--<p editable-textarea="editStopWordsFrm.stopWords" e-rows="24" e-cols="50">
+                                            <pre>{{ editStopWordsFrm.stopWords || 'no stop words' }}</pre>
+                                        </p>-->
+                                        <textarea name="regexes" ng-model="newRegexesFrm.regexes" required="true"
+                                        style="height:350px; width:100%; overflow:scroll;"> </textarea>
+                                    <!--</div>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button ng-disabled="!(newRegexesFrm.label)" type="button" class="btn btn-action" ng-click="onAddRegexList()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- confirmation dialogue for deleting stop words list -->
+        <div class="modal fade" id="deleteRegexListModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" >
+                <!--<form class="form-horizontal" ng-submit="onConfirmDelete()">-->
+                 	<div class="modal-header">
+                        <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <h4 class="modal-title" >Confirm Delete</h4>
+
+                    </div>
+                    <div class="modal-body">
+        				<div class="form-group">
+                            <div class="col-sm-1"><span class="fa fa-2x fa-question-circle blue"></span></div>
+                            <div class="col-sm-11"><label>Do you really want to delete the following Personal Data List?</label></div><br/>
+                            <label> Label: {{deleteRegexesFrm.label}}, Id:{{deleteRegexesFrm.id}}, Num. of regexes:{{deleteRegexesFrm.num}} </label>
+        				</div>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-action" type="button" value="Cancel" data-dismiss="modal" />
+                        <input class="btn btn-action" type="button" value=" OK " ng-click="onDeleteRegexList(deleteRegexesFrm.id)"/>
+                    </div>
+                <!--</form>-->
+            </div>
+        </div>
+        </div>
+
+        <!-- Modal creating a new space -->
+        <div class="modal fade" id="newRegexSearchModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="form-horizontal" ng-submit="validateNewRegexSearch()">
+                        <div class="modal-header">
+                            <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                                <span class="fa fa-close"></span>
+                            </button>
+                            <h4 class="modal-title">New Personal Data Extraction</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="label" class="col-sm-3 control-label">Label</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="label" name="label" ng-required="true" ng-model="spaceForm.label" aria-required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="crawls" class="col-sm-3 control-label">Original Data</label>
+                                <div class="col-sm-9">
+                                    <ol id="crawls" class="nya-bs-select form-control"
+                                        ng-model="spaceForm.crawls" data-live-search="true"
+                                        title="Select a original data" data-size="10" multiple>
+                                        <li nya-bs-option="crawl in crawls | toArray | filter: {status: 2}">
+                                            <a>
+                                                <span>{{crawl.query}}</span>
+                                                <small>({{crawl.volume}} docs)</small>
+                                                <span class="glyphicon glyphicon-ok check-mark"></span>
+                                            </a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="crawls" class="col-sm-3 control-label">Personal Data List</label>
+                                <div class="col-sm-9">
+                                    <ol id="crawls" class="nya-bs-select form-control"
+                                        ng-model="regexSearchForm.rgxls" data-live-search="true"
+                                        title="Select personal data lists" data-size="10" multiple>
+                                        <li nya-bs-option="list in regexLists | toArray">
+                                            <a>
+                                                <span>{{list.label}}</span>
+
+                                                <span class="glyphicon glyphicon-ok check-mark"></span>
+                                            </a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-action" type="submit" ng-disabled="regexSearchForm.$invalid || regexSearchForm.crawls.length == 0">
+                                <span class="fa fa-save"></span> Launch
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+</div>
+
+</div>
+<br/>

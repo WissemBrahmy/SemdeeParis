@@ -1,0 +1,152 @@
+<div class="modal-dialog" >
+    <div class="modal-content" >
+        <form class="form-horizontal" ng-submit="saveSchedule()">
+         	<div class="modal-header">
+                <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                    <span class="fa fa-close"></span>
+                </button>
+                <h4 class="modal-title text-center" >Create schedule</h4>
+
+            </div>
+            <div class="modal-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Name</label>
+					<div class="col-sm-9">
+						<input class="form-control" type="text" ng-model="currentSchedule.query" />
+					</div>
+				</div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Launching Date</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" datepicker type="text" ng-model="currentSchedule.startDate" data-ng-required="true" ng-value="currentSchedule.startDate" />
+                    </div>
+                    <label class="col-sm-3 control-label">Expiry date</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" datepicker type="text" ng-model="currentSchedule.endDate" data-ng-required="true" ng-value="currentSchedule.endDate" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Start time</label>
+                    <div class="col-sm-3">
+                        <ol class="nya-bs-select form-control" ng-model="currentSchedule.startTime" data-live-search="true"
+                            title="Select a time" data-size="8" >
+                            <li nya-bs-option="time in scheduleForm.listTimes">
+                                <a>{{ time.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                            </li>
+                        </ol>
+                    </div>
+                    <label class="col-sm-3 control-label">End time</label>
+                    <div class="col-sm-3">
+                        <ol class="nya-bs-select form-control" ng-model="currentSchedule.endTime" data-live-search="true"
+                            title="Select a time" data-size="8" >
+                            <li nya-bs-option="time in scheduleForm.listTimes">
+                                <a>{{ time.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Schedule type</label>
+                    <div class="col-sm-9">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label ng-repeat="schedule in scheduleForm.scheduleTypes"
+                                ng-class="schedule.type == currentSchedule.scheduleType? 'btn btn-default active':'btn btn-default'"
+                                ng-click="currentSchedule.scheduleType = schedule.type" >
+                                <input name="cssPre1" ng-value="schedule.type"
+                                       ng-class="schedule.type == currentSchedule.scheduleType? 'active':''"
+                                       data-ng-model="currentSchedule.reccurenceType"
+                                       type="radio">{{schedule.label}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:100px;">
+                <!-- Start Elements for Reccurence Schedule-->
+                    <!-- daily -->
+                    <div class="form-group" ng-show="currentSchedule.scheduleType == 'daily'">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <div>
+                                <table width="100%">
+                                    <tr>
+                                        <td><input type="checkbox" /> Sunday</td>
+                                        <td><input type="checkbox" /> Monday</td>
+                                        <td><input type="checkbox" /> Tuesday</td>
+                                        <td><input type="checkbox" /> Wednesday</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" /> Thurday</td>
+                                        <td><input type="checkbox" /> Friday</td>
+                                        <td><input type="checkbox" /> Saturday</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- weekly -->
+                    <div class="form-group" ng-show="currentSchedule.scheduleType == 'weekly'">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <div>Recur every <input type="text" style="width:35px" /> week(s) on:</div>
+                            <div>
+                               <table width="100%">
+                                   <tr>
+                                       <td><input type="checkbox" /> Sunday</td>
+                                       <td><input type="checkbox" /> Monday</td>
+                                       <td><input type="checkbox" /> Tuesday</td>
+                                       <td><input type="checkbox" /> Wednesday</td>
+                                   </tr>
+                                   <tr>
+                                       <td><input type="checkbox" /> Thurday</td>
+                                       <td><input type="checkbox" /> Friday</td>
+                                       <td><input type="checkbox" /> Saturday</td>
+                                   </tr>
+                               </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- monthly -->
+                    <div class="form-group" ng-show="currentSchedule.scheduleType == 'monthly'">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="col-sm-1" style="padding-left:0px;padding-top:6px">Month</p>
+                            <div class="col-sm-6">
+                                <ol class="nya-bs-select form-control" ng-model="currentSchedule.monthly"
+                                    data-live-search="true"
+                                    title="Select month" data-size="8"  >
+                                    <li nya-bs-option="month in scheduleForm.listMonths" >
+                                        <a>{{ month.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <p class="col-sm-1" style="padding-left:0px;padding-top:6px">Days</p>
+                            <div class="col-sm-6">
+                                <ol class="nya-bs-select form-control" ng-model="currentSchedule.daily"
+                                    data-live-search="true"
+                                    title="Select days" data-size="8"  multiple >
+                                    <li nya-bs-option="day in scheduleForm.listDays" >
+                                        <a>{{day}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- yearly -->
+                    <div class="form-group" ng-show="currentSchedule.scheduleType == 'yearly'">
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            yearly
+                        </div>
+                    </div>
+                <!-- End Elements for Reccurence Schedule -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-action" type="submit" value="OK" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,817 @@
+
+
+<!-- style for drag document-->
+<div id="appendTo" style="background: #444; color:#FFF;"></div>
+
+<!-- buttons bar -->
+<div style="background-color:#009FE3; height: 4em; width: 100%">
+   <div id="button-bar">
+       <table style="border-spacing: 4px; border-collapse: separate; width: 100%"><tr>
+           <td style="width: 80%">
+               <ul class="nav navbar-nav">
+                   <li class="dropdown">
+                       <button href="javascript:void(0)" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-filter"></span> COLLECT <span class="caret"></span></button>
+                       <ul class="dropdown-menu" role="menu">
+                           <li data-toggle="tooltip" title="To collect data from web, social networks, etc.">
+                               <a href="javascript:void(0)" ng-click="onMenuGetData()"><span class="fa fa-search"> Crawl</span></a></li>
+                           <li data-toggle="tooltip" title="To import data from files which is exported from an outside application (csv, json, etc.)" >
+                               <a href="javascript:void(0)" ng-click="onMenuImportData()"><span class="fa fa-upload"> Import Data</span></a></li>
+                           <li data-toggle="tooltip" title="To import documents in common formats into platform (doc, pdf, ods, ppt, html, eput, rtf, etc.)">
+                               <a href="javascript:void(0)" ng-click="onMenuAddFiles()"><span class="fa fa-plus"> Import Documents</span></a></li>
+                           <li data-toggle="tooltip" title="To import Email files in common formats into platform (pst, eml, msg, mbox, etc.)">
+                               <a href="javascript:void(0)" ng-click="onMenuAddEmailFiles()"><span class="fa fa-plus"> Import Email Files</span></a></li>
+                               <li class="divider"></li>
+                           <li  data-toggle="tooltip" title="To have an overview of an external document regarding to a selected Cognitive Space.">
+                               <a href="javascript:void(0)" ng-click="onMenuTagger()"><span class="fa fa-tags"> Tag A Document</span></a></li>
+                            <li data-toggle="tooltip" title="Personal Data Extraction helps to find special patterns such as telephone numbers, post codes, etc.">
+                               <a href="javascript:void(0)" ng-click="onMenuRegexSearch()"><span class="fa fa-search"> Extract Personal Data</span></a></li>
+                       </ul>
+                   </li>
+                   <li class="dropdown">
+                       <button href="javascript:void(0)" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-database"></span> ORGANIZE <span class="caret"></span></button>
+                       <ul class="dropdown-menu">
+                           <li data-toggle="tooltip" title="Cognitive Space organizes all the documents by establishing cognitive links between them.">
+                               <a href="javascript:void(0)" ng-click="onMenuCreateSpace()"><span class="fa fa-plus"> Create Cognitive Space</span></a>
+                           </li>
+                       </ul>
+                   </li>
+                   <li class="dropdown">
+                       <button href="javascript:void(0)" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-pie-chart"></span> DISCOVER <span class="caret"></span></button>
+                       <ul class="dropdown-menu">
+                           <li data-toggle="tooltip" title="Clustering groups automatically all documents according to their meaning." >
+                               <a href="javascript:void(0)" ng-click="onMenuCreateCluster()"><span class="fa fa-plus"> Clustering</span></a>
+                           </li>
+                           <li data-toggle="tooltip" title="Export all clusters of a Cognitive Space to csv file">
+                               <a href="javascript:void(0)" ng-click="onMenuExportCluster()"><span class="fa fa-download"> Export Clusters</span></a>
+                           </li>
+                       </ul>
+                   </li>
+                   <li class="dropdown">
+                       <button href="javascript:void(0)" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-search"></span> EXPLORE <span class="caret"></span></button>
+                       <ul class="dropdown-menu">
+                           <li data-toggle="tooltip" title="Allows you to perform search with a word, a few words, a sentence, a paragraph and even an entire document.">
+                               <a href="javascript:void(0)" ng-click="onMenuDeepSearch()"><span class="fa fa-search"> Deep Search</span></a>
+                           </li>
+                       </ul>
+                   </li>
+                   <li class="dropdown">
+                       <button href="javascript:void(0)" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-refresh"></span> REUSE <span class="caret"></span></button>
+                       <ul class="dropdown-menu">
+                           <li data-toggle="tooltip" title="Categorizer enables you to isolate and classify contents according to your">
+                               <a href="javascript:void(0)" ng-click="onMenuCreateAdvancedCluster()"><span class="fa fa-plus"> Categorizer</span></a>
+                           </li>
+                       </ul>
+                   </li>
+               </ul>
+           </td>
+           <!--
+           <td width="100%">
+               <form ng-submit="deepSearch(searchString,activeNode.data.spaceId)" ng-show="activeNode.data.spaceId > 0">
+                    <input class="form-control" ng-model="searchString" id="searchString" placeholder="Deep Search - Fill text and hit Enter"/>
+                </form>
+            </td>
+            <td nowrap="nowrap">
+                <button id="btnNew" class="btn _btn-default" type="button" ng-click="onNewButton(activeNode)">
+                    <span class="fa fa-plus"></span> New
+                </button>
+                <button id="btnClone" class="btn _btn-default" type="button" ng-click="onCloneButton(activeNode)">
+                    <span class="fa fa-copy"></span> Clone
+                </button>
+                <button id="btnDelete" class="btn _btn-default" type="button" ng-click="onDeleteButton(activeNode)">
+                    <span class="fa fa-remove"></span> Delete
+                </button>
+                <button id="btnRename" class="btn _btn-default" type="button" ng-click="onRenameButton(activeNode)">
+                    <span class="fa fa-edit"></span> Rename
+                </button>
+
+               <button id="btnImport" class="btn _btn-default" type="button" ng-click="onImportButton(activeNode)" ng-controller="uploadController">
+                   <span class="fa fa-upload"></span> Import
+               </button>
+                <button id="btnExport" class="btn _btn-default" type="button" ng-click="onExportButton(activeNode)">
+                    <span class="fa fa-download"></span> Export
+                </button>
+
+            </td>
+            -->
+            <td nowrap="nowrap" style="padding-right: 5px; width: 20%; text-align: right">
+                <button class="btn default-btn" ng-if="activeNode" id="btnChart" ng-click="showHideChart()" ng-class="(isSearchDocunemts || exportclusters)?'hide':''" title="{{showChart?'Hide Chart':'Show Chart'}}">
+                    <span class="fa fa-pie-chart"></span> {{showChart?'Hide Chart':'Show Chart'}}
+                </button>
+            </td>
+       </tr></table>
+   </div>
+</div>
+
+<!--- display cluster exported -->
+<div ng-if="exportclusters.length">
+    <div class="col-md-12 nopadding">
+        <div class="panel-heading">Export Clusters -- {{exportSpaceName}} ({{exportclusters.length}})</div>
+        <div class="panel" >
+            <div style="height:{{grid3Height}}px;" id="grid3" ui-grid="gridOptions3" ui-grid-resize-columns ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter class="grid"></div>
+        </div>
+    </div>
+</div>
+
+<!-- search not found-->
+<div ng-if="documents.length==0"><h2 class="blue text-center">
+    <span class="fa fa-search"></span> No document found</h2>
+</div>
+
+<!-- display chart-->
+<div id="div_chart" ng-if="chart.data.length" ng-show="showChart">
+    <div class="col-md-12 nopadding">
+        <div class="panel">
+            <ng-include src="'app/templates/node_chart.html'"></ng-include>
+        </div>
+    </div>
+</div>
+
+<!-- display all document of a Clustering, categorization -->
+<div ng-if="clusterdocuments.length">
+    <div class="col-md-12 nopadding">
+        <div class="panel-heading">Result Documents - {{activeNode.title}} <!--<span ng-if="activeCluster.label"> - {{activeCluster.label}}</span>--> ({{clusterdocuments.length}} of {{gridOptions4.totalItems}} Documents)</div>
+        <div class="panel" >
+            <input ng-model='filterValue'/><button ng-click='filter()'>Search</button><button ng-click='clearFilter()'>Clear</button>
+            <button align='right' ng-click='downloadCSVFile()'>Export As CSV</button>
+            <div style="height:{{grid1Height}}px;" id="grid4" ui-grid="gridOptions4" ui-grid-resize-columns ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter ui-grid-pagination class="grid"></div>
+        </div>
+    </div>
+</div>
+
+<!-- display grid documents: for crawl, space, search results, cluster, category-->
+<div ng-if="documents.length">
+    <div class="col-md-12 nopadding">
+        <div class="panel-heading" ng-if="!isSearchDocunemts">Documents - {{activeNode.title}} <span ng-if="activeCluster.label"> - {{activeCluster.label}}</span> ({{documents.length}}  of {{gridOptions.totalItems}}) </div>
+        <div class="panel-heading" ng-if="isSearchDocunemts">Search Results - {{searchSpaceName}} ( {{documents.length}} )</div>
+        <div class="panel" >
+            <!--<ng-include src="'app/templates/node_documents.html'"></ng-include>-->
+            <!--<div id="grid1" ui-grid="gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-resize-columns ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-importer ui-grid-exporter ui-grid-grouping class="grid"></div>-->
+            <!--<div ng-if="!(isClusterActive || isCategoryActive)" >-->
+            <input ng-model='filterValue'/><button ng-click='filter()'>Search</button><button ng-click='clearFilter()'>Clear</button>
+            <!--<button align='right' ng-click='exportAllData()'>Export As CSV</button>-->
+            <button align='right' ng-click='downloadCSVFile()'>Export As CSV</button>
+            <!--</div>-->
+            <!--<div ng-if="(isClusterActive || isCategoryActive)" >-->
+              <button ng-if="(isClusterActive || isCategoryActive)" align='right' ng-click='exportAsOriginalData()'>Export As Original Data</button>
+            <!--</div>-->
+            <div style="height:{{grid1Height}}px;" id="grid1" ui-grid="gridOptions" ui-grid-resize-columns ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter ui-grid-pagination class="grid"></div>
+        </div>
+    </div>
+</div>
+
+<!-- disply grid related documents-->
+<div ng-if="documents.length || clusterdocuments.length">
+    <!-- display doc tags -->
+    <div class="col-md-12 nopadding">
+        <div class="panel" ng-if="activeDocument.tags">
+            <div class="panel-heading">Document Tags <!--Tags  - {{activeDocument.title | cut:true:100:'...'}}--></div>
+            <div class="panel-body">
+                <span ng-repeat="tag in activeDocument.tags track by $index" class="tag btn btn-default btn-xs nohover"><span class="glyphicon glyphicon-tags"></span> {{tag}}</span>
+                <span ng-if="activeDocument.tags.length==0">No tags found</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 nopadding">
+        <div class="panel" >
+            <!--<ng-include src="'app/templates/node_reldocuments.html'"></ng-include>-->
+            <div ng-class="reldocuments?'col-md-8':'col-md-12'" style="padding:0;">
+                <div class="panel-heading">
+                    <span id="docLoading" class="fa fa-refresh glyphicon-refresh-animate"></span>&nbsp;
+                    <span ng-if="!activeDocument">No document selected</span><span ng-if="activeDocument.title">{{activeDocument.title | cut:true:100:'...'}}</span><span ng-if="!activeDocument.title">{{activeDocument.id}}</span>
+                    <a ng-if="activeDocument.url" href="{{activeDocument.url}}" target="_blank">
+                        <button type="button" class="pull-right btn btn-action" style="color: #fff; margin: -8px -12px 0 0;" title="Open in new window">
+                            <span class="fa fa-external-link"></span>
+                        </button>
+                    </a>
+                </div>
+                <iframe id="frameContent" width="100%" height="500" onload="$('#docLoading').hide()" sandbox></iframe>
+            </div>
+            <div class="col-md-4" style="padding:0;"  ng-if="reldocuments">
+                <div class="panel-heading">Related Documents ( {{reldocuments.length}} )</div>
+                <div style="height: 500px;" id="grid2" ui-grid="gridOptions2" ui-grid-resize-columns ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter class="grid2"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- display node no have API-->
+<div ng-if="[undefined,'ROOT','ROOT1','ROOT2','SPACE_SC','SPACE_AC','SPACE_MC'].indexOf(activeNode.data.type)>=0 && !exportclusters && !isSearchDocunemts">
+    <div ng-if="activeNode.data.type==undefined">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 style="font-family:Orbitron;color:#009FE3;">Semdee Portal</h1>
+                <p class="lead">A cognitive platform brought to you by Semdee.</p>
+            </div>
+        </div>
+        <div id="home_landing" class="col-md-12" style="padding:0 5em 0 5em; margin-top: -3em; ">
+            <div class="col-md-12" style="padding: 0 0 4em 0;border: 1px solid #009fe3;">
+                <div class="col-md-12 text-center">
+                    <p><b>&#171; Understand and use large amount of text data &#187;</b></p>
+                    <p class="text-center" style="margin-bottom: 2em;">An intuitive approach in five steps</p>
+
+                    <div class="col-md-2 col-md-offset-1 text-center">
+                        <p><b>Step 1</b></p>
+                        <img src="public/image/home1.png" class="img-rounded">
+                        <p><b>COLLECT</b></p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <p><b>Step 2</b></p>
+                        <img src="public/image/home2.png" class="img-rounded">
+                        <p><b>ORGANIZE</b></p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <p><b>Step 3</b></p>
+                        <img src="public/image/home3.png" class="img-rounded">
+                        <p><b>DISCOVER</b></p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <p><b>Step 4</b></p>
+                        <img src="public/image/home4.png" class="img-rounded">
+                        <p><b>EXPLORE</b></p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <p><b>Step 5</b></p>
+                        <img src="public/image/home5.png" class="img-rounded">
+                        <p><b>REUSE</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="activeNode.data.type=='ROOT1'">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 style="font-family:Orbitron;color:#009FE3;">My Original Data</h1>
+                <div class="col-md-12 text-center" >
+                    <p>
+                        "My Original Data" is where your raw data from "COLLECT" are stored.
+                        It is comparable to the results from search engines such as GOOGLE and BING, etc...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="activeNode.data.type=='CRAWL_RG'">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 style="font-family:Orbitron;color:#009FE3;">Personal Data Extraction</h1>
+                <div class="col-md-12 text-center" >
+                    <p>
+                        "Personal Data" is where your Extracted Personal Data  are stored.
+                        This enables users to search for special patterns such as telephone nummber, postal code, etc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="activeNode.data.type=='ROOT2'">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 style="font-family:Orbitron;color:#009FE3;">My Cognitive Spaces</h1>
+                <div class="col-md-12 text-center" >
+                    <p>
+                        The results from "ORGANIZE" function are stored under "My Cognitive Spaces".
+                        As the name indicates, all your Cognitive Spaces can be accessed from here.
+                        A Cognitive Space is created from a group of documents by indexing and creating cognitive links between them, like a human brain.
+                        This allows to execute cognitive steps in other main functions (DISCOVER, EXPLORE, REUSE) of the platform.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="activeNode.data.type=='SPACE_SC'">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 style="font-family:Orbitron;color:#009FE3;">Smart Cluster</h1>
+                <div class="col-md-12 text-center" >
+                    <p>All the clusters created with "Clustering" under "DISCOVER" function are stored here. Clusters allow you to :</p>
+                    <ul class="text-left col-md-offset-3">
+                        <li>have a general overview of big amount of text data, thus understand quickly the whole situation</li>
+                        <li>know the importance of each idea, opinion, trend, etc.</li>
+                        <li>discover ideas, opinions, trends etc. that couldn't be detected without big amount of data.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="activeNode.data.type=='SPACE_AC'">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 style="font-family:Orbitron;color:#009FE3;">Categories</h1>
+                <div class="col-md-12 text-center" >
+                    <p>
+                        All the categories created with "Categorizer" under "REUSE" function are stored here.
+                        Categorizer allows you to isolate and classify particular ideas, trends or opinions that represent a reuse value in your business.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- dialog -->
+<!-- Modal launching parametters -->
+<ng-include src="'app/templates/crawl.html'"></ng-include>
+<ng-include src="'app/templates/space.html'"></ng-include>
+<ng-include src="'app/templates/categorizer.html'"></ng-include>
+<ng-include src="'app/templates/monitorParamsModal.html'"></ng-include>
+<ng-include src="'app/templates/renameClusterModal.html'"></ng-include>
+<ng-include src="'app/templates/addClusterModal.html'"></ng-include>
+<ng-include src="'app/templates/searchModal.html'"></ng-include>
+<ng-include src="'app/templates/exportModal.html'"></ng-include>
+<ng-include src="'app/templates/confirmModal.html'"></ng-include>
+<ng-include src="'app/templates/alertModal.html'"></ng-include>
+<ng-include src="'app/templates/viewDocumentModal.html'"></ng-include>
+<ng-include src="'app/templates/regexSearch.html'"></ng-include>
+<!-- Import csv/json dialogue -->
+<div ng-controller="uploadController">
+    <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Import Data</h4>
+                </div>
+
+                <div class="modal-body" ng-show="uploadFrm.importResults==null">
+
+                    <table width="100%" style="    border-collapse: separate;border-spacing: 5px;">
+                        <tr><td><b>Original Data Name</b></td></tr>
+                        <tr>
+                            <td><input ng-required="true"  class="autoFocus form-control" name="label" ng-model="uploadFrm.label"  onchange="handleFile(this.files[0])" ></td>
+                              </tr>
+                        <tr><td><b>Select a file (.csv / .json)</b></td></tr>
+                        <tr>
+                            <td width="80%" style="padding-left:2px;border:1px solid #c1c1c1;">
+                                <span class="fileupload-preview">{{uploadFrm.fileName | cut:true:60:'...'}}</span>
+                            </td>
+                            <td width="20%" align="right" >
+                                <span class="btn btn-file btn-default">
+                                    <span class="importStatus fa fa-folder-open"></span>
+                                    Browse... <input type="file" file-reader="uploadFrm.fileContent" file-directive="uploadFrm.myFile" accept=".csv, .json"  style="width: 100px;height: 25px" />
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+
+                    </table>
+
+                    <!-- settings csv dialogue by wissem-->
+                    <div ng-if="uploadFrm.fileContent && uploadFrm.label">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group" style="margin-top:8px">
+                            <input type="checkbox" id="HasHeader" ng-model="uploadFrm.isheader"  /><b> is Header Row </b>
+                          </div>
+
+                            <!-- show header of csv file  by wissem-->
+                          <div ng-if="uploadFrm.isheader" >
+                              <label>Reading header of csv file and seeing if it matches !</label>
+                            <p class="alert alert-info"> {{uploadFrm.fileContent.split("\n")[0];}} </p>
+                            </div>
+                        </div>
+                      </div>
+
+                      <!-- Mapping columns of csv file  by wissem-->
+                       <div class="row">
+                         <div class="col-md-4">
+                           <table width="100%" class="table responsive-table table-bordered table-striped">
+                             <thead class="bg-primary">
+                               <th>Heading</th>
+                               <th>Mapping</th>
+                             </thead>
+                             <tbody>
+                               <tr >
+
+                                     <td ng-if="uploadFrm.isheader "><b>{{uploadFrm.fileContent.split(";")[0] ;}}</b></td>
+                                     <td ng-if="!uploadFrm.isheader"><b>column #1</b></td>
+                                     <td>
+                                       <select class="form-control" name="uploadFrm.column1" ng-model="uploadFrm.column1">
+                                           <option></option>
+                                           <option ng-disabled="findColumn('ID')">ID</option>
+                                           <option ng-disabled="findColumn('Title')">Title</option>
+                                           <option ng-disabled="findColumn('Description')">Description</option>
+                                           <option ng-disabled="findColumn('Tags')">Tags</option>
+                                           <option ng-disabled="findColumn('Author')">Author</option>
+                                           <option ng-disabled="findColumn('Language')">Language</option>
+                                       </select>
+                                     </td>
+
+                                   </tr>
+                                   <tr>
+                                     <td ng-if="uploadFrm.isheader"><b>{{uploadFrm.fileContent.split(";")[1];}}</b></td>
+                                      <td ng-if="!uploadFrm.isheader"><b>Column #2</b></td>
+                                     <td>
+                                       <select class="form-control" ng-model="uploadFrm.column2">
+                                           <option></option>
+                                         <option ng-disabled="findColumn('ID')">ID</option>
+                                         <option ng-disabled="findColumn('Title')">Title</option>
+                                         <option ng-disabled="findColumn('Description')">Description</option>
+                                         <option ng-disabled="findColumn('Tags')">Tags</option>
+                                         <option ng-disabled="findColumn('Author')">Author</option>
+                                         <option ng-disabled="findColumn('Language')">Language</option>
+                                       </select>
+                                   </td>
+
+                                     </tr>
+                                     <tr>
+                                       <td ng-if="uploadFrm.isheader"><b>{{uploadFrm.fileContent.split(";")[2];}}</b></td>
+                                        <td ng-if="!uploadFrm.isheader"><b>Column #3</b></td>
+                                     <td>
+                                       <select class="form-control" ng-model="uploadFrm.column3">
+                                           <option></option>
+                                       <option ng-disabled="findColumn('ID')">ID</option>
+                                         <option ng-disabled="findColumn('Title')">Title</option>
+                                         <option ng-disabled="findColumn('Description')">Description</option>
+                                         <option ng-disabled="findColumn('Tags')">Tags</option>
+                                         <option ng-disabled="findColumn('Author')">Author</option>
+                                         <option ng-disabled="findColumn('Language')">Language</option>
+                                       </select>
+                                     </td>
+                                     </tr>
+                                     <tr>
+                                       <td ng-if="uploadFrm.isheader"><b>{{uploadFrm.fileContent.split(";")[3];}}</b></td>
+                                        <td ng-if="!uploadFrm.isheader"><b>Column #4</b></td>
+                                     <td>
+                                       <select class="form-control" ng-model="uploadFrm.column4">
+                                           <option></option>
+                                         <option ng-disabled="findColumn('ID')">ID</option>
+                                         <option ng-disabled="findColumn('Title')">Title</option>
+                                         <option ng-disabled="findColumn('Description')">Description</option>
+                                         <option ng-disabled="findColumn('Tags')">Tags</option>
+                                         <option ng-disabled="findColumn('Author')">Author</option>
+                                         <option ng-disabled="findColumn('Language')">Language</option>
+                                       </select>
+                                     </td>
+                                     </tr>
+
+                                     <tr>
+                                       <td ng-if="uploadFrm.isheader"><b>{{uploadFrm.fileContent.split(";")[4];}}</b></td>
+                                        <td ng-if="!uploadFrm.isheader"><b>Column #5</b></td>
+                                     <td>
+                                       <select class="form-control" ng-model="uploadFrm.column5">
+                                         <option></option>
+                                         <option ng-disabled="findColumn('ID')">ID</option>
+                                         <option ng-disabled="findColumn('Title')">Title</option>
+                                         <option ng-disabled="findColumn('Description')">Description</option>
+                                         <option ng-disabled="findColumn('Tags')">Tags</option>
+                                         <option ng-disabled="findColumn('Author')">Author</option>
+                                         <option ng-disabled="findColumn('Language')">Language</option>
+                                       </select>
+                                     </td>
+
+                                     </tr>
+
+                                     <tr>
+                                       <td ng-if="uploadFrm.isheader"><b>{{uploadFrm.fileContent.split(";")[5]||uploadFrm.fileContent.split(",")[5];}}</b></td>
+                                        <td ng-if="!uploadFrm.isheader"><b>Column #6</b></td>
+                                     <td>
+                                       <select class="form-control" ng-model="uploadFrm.column6">
+                                           <option></option>
+                                         <option ng-disabled="findColumn('ID')">ID</option>
+                                         <option ng-disabled="findColumn('Title')">Title</option>
+                                         <option ng-disabled="findColumn('Description')">Description</option>
+                                         <option ng-disabled="findColumn('Tags')">Tags</option>
+                                         <option ng-disabled="findColumn('Author')">Author</option>
+                                         <option ng-disabled="findColumn('Language')">Language</option>
+                                       </select>
+                                     </td>
+
+                                     </tr>
+                             </tbody>
+
+                             </table>
+                         </div>
+
+                         <!-- Advanced Settings of csv file  by wissem-->
+                         <div class="col-md-8">
+                           <div class="panel panel-primary">
+                             <div class=" panel-heading">
+                               Advanced Settings
+                             </div>
+                             <div class="panel-body">
+                               <div class="form-group">
+                                 <label for="">File Encoding</label>
+                                 <select class="form-control " ng-model="uploadFrm.Encoding" >
+
+                                   <option >UTF-8</option>
+                                   <option >UTF-16</option>
+                                   <option >UTF-32</option>
+                                   <option >US-ASCII </option>
+                                   </select>
+                               </div>
+                               <div class="form-group" >
+                                 <label for="">CSV Delimiter</label>
+                                    <input class="form-control"  ng-model="uploadFrm.Delimiter" type="text">
+
+                               </div>
+                               <div class="form-group">
+                                 <label for="">Start Row</label>
+                                 <select class="form-control input-sm" ng-model="uploadFrm.StartRow" >
+                                   <option >0</option>
+                                   <option >1</option>
+                                   </select>
+
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                </div>
+
+                <div class="modal-body" ng-show="uploadFrm.importResults!=null">
+                    <div ng-repeat="mess in uploadFrm.importResults" class="alert alert-warning" role="alert">{{mess}}
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button ng-disabled="!(uploadFrm.file && uploadFrm.label)" type="button" class="btn btn-action" ng-click="onImportFile()"><span class="glyphicon glyphicon-upload"></span> Start Import Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- import files dialogue (doc, pdf, etc.) -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <!--<h4 class="modal-title">Add Documents</h4>-->
+                    <h4 class="modal-title">Import Documents (DOC, PDF)</h4>
+                </div>
+
+                <div class="modal-body" ng-show="uploadFrm.importResults==null">
+                    <table width="100%" style="    border-collapse: separate;    border-spacing: 5px;">
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" ng-click="onChangeAddDocumentType()" name="addDocType" ng-value="1" checked ng-model="uploadFrm.addDocType" />
+                                    <b>New Original Data</b>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="crawlName" ng-required="true" class="autoFocus form-control" ng-model="uploadFrm.label" ng-disabled="uploadFrm.addDocType!=1" />
+                            </td>
+                            <td>
+                              <label class="col-sm-3 control-label">Language</label>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" ng-click="onChangeAddDocumentType()" name="addDocType" ng-value="2" ng-model="uploadFrm.addDocType" />
+                                    <b>Original Data</b>
+                                </label>
+                            </td>
+                            <td>
+                              <!--<div class="col-sm-3">-->
+
+                                <ol class="nya-bs-select form-control"
+                                  ng-model="crawlForm.params.languages"
+                                  data-live-search="false"
+                                  title="Language"
+                                  multiple
+                                  data-size="7" >
+                                  <li nya-bs-option="language in languages" ng-click="clickMultiToSingleOption('language')">
+                                    <a>
+                                      <span>{{language.label}}</span>
+                                      <span class="glyphicon glyphicon-ok check-mark"></span>
+                                    </a>
+                                  </li>
+                                </ol>
+                              <!--</div>-->
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <ol id="cbxAddDocCrawl" class="nya-bs-select form-control"
+                                    ng-model="uploadFrm.crawlSelected"
+                                    data-live-search="true"
+                                    title="Select a Original Data"
+                                    data-size="10" disabled="uploadFrm.addDocType!=2? 'disabled':''" >
+                                    <li nya-bs-option="sp in uploadFrm.crawls" >
+                                        <a>
+                                            <span>{{sp.query}}</span>
+                                            <span class="glyphicon glyphicon-ok check-mark"></span>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr><td><b>Files selected (.doc/.docx/.pdf)</b></td></tr>
+                        <tr>
+                            <td width="80%" style="padding-left:2px;border:1px solid #c1c1c1;">
+                                <div style="height: 150px; overflow: scroll;">
+                                <p style="margin-bottom:0px" ng-repeat="v in uploadFrm.filesName">
+                                    <span class="col-md-11">{{$index+1}}. {{v | cut:true:40:'...'}}</span>
+                                    <span class="col-md-1"><span class="fa fa-remove pointer" ng-click="removeUploadFile($index)"></span></span>
+                                </p>
+                                </div>
+                            </td>
+                            <td width="20%" align="right" valign="top">
+                                <span class="btn btn-file btn-default">
+                                    <span class="importStatus fa fa-folder-open"></span>
+                                    Browse... <input type="file" title="" multiple files-directive="uploadFrm.myFiles" accept=".doc, .docx, .pdf" style="width: 100px;height: 25px" />
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-body" ng-show="uploadFrm.importResults!=null">
+
+                    <!--<div ng-repeat="mess in uploadFrm.importResults" >{{mess}}</div>-->
+                    <div style="height: 150px; overflow: scroll;">
+                        <p style="margin-bottom:0px" ng-repeat="mess in uploadFrm.importResults">{{mess}}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-disabled="!(uploadFrm.file && (uploadFrm.crawlSelected || uploadFrm.label))" type="button" class="btn btn-action" ng-click="onUploadFiles()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- import Emails dialogue (pst, eml, msg, etc.) -->
+    <div class="modal fade" id="uploadEmailModal" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Import Emails (PST, EML, MSG)</h4>
+                </div>
+
+                <div class="modal-body" ng-show="uploadFrm.importResults==null">
+                    <table width="100%" style="    border-collapse: separate;    border-spacing: 5px;">
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" ng-click="onChangeAddDocumentType()" name="addDocType" ng-value="1" checked ng-model="uploadFrm.addDocType" />
+                                    <b>New Original Data</b>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="crawlName" ng-required="true" class="autoFocus form-control" ng-model="uploadFrm.label" ng-disabled="uploadFrm.addDocType!=1" />
+                            </td>
+                            <td>
+                              <label class="col-sm-3 control-label">Language</label>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" ng-click="onChangeAddDocumentType()" name="addDocType" ng-value="2" ng-model="uploadFrm.addDocType" />
+                                    <b>Original Data</b>
+                                </label>
+                            </td>
+                            <td>
+                              <!--<div class="col-sm-3">-->
+
+                                <ol class="nya-bs-select form-control"
+                                  ng-model="crawlForm.params.languages"
+                                  data-live-search="false"
+                                  title="Language"
+                                  multiple
+                                  data-size="7" >
+                                  <li nya-bs-option="language in languages" ng-click="clickMultiToSingleOption('language')">
+                                    <a>
+                                      <span>{{language.label}}</span>
+                                      <span class="glyphicon glyphicon-ok check-mark"></span>
+                                    </a>
+                                  </li>
+                                </ol>
+                              <!--</div>-->
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <ol id="cbxAddDocCrawl" class="nya-bs-select form-control"
+                                    ng-model="uploadFrm.crawlSelected"
+                                    data-live-search="true"
+                                    title="Select a Original Data"
+                                    data-size="10" disabled="uploadFrm.addDocType!=2? 'disabled':''" >
+                                    <li nya-bs-option="sp in uploadFrm.crawls" >
+                                        <a>
+                                            <span>{{sp.query}}</span>
+                                            <span class="glyphicon glyphicon-ok check-mark"></span>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr><td><b>Files selected (.pst/.eml/.msg)</b></td></tr>
+                        <tr>
+                            <td width="80%" style="padding-left:2px;border:1px solid #c1c1c1;">
+                                <div style="height: 150px; overflow: scroll;">
+                                <p style="margin-bottom:0px" ng-repeat="v in uploadFrm.filesName">
+                                    <span class="col-md-11">{{$index+1}}. {{v | cut:true:40:'...'}}</span>
+                                    <span class="col-md-1"><span class="fa fa-remove pointer" ng-click="removeUploadFile($index)"></span></span>
+                                </p>
+                                </div>
+                            </td>
+                            <td width="20%" align="right" valign="top">
+                                <span class="btn btn-file btn-default">
+                                    <span class="importStatus fa fa-folder-open"></span>
+                                    Browse... <input type="file" title="" multiple files-directive="uploadFrm.myFiles" accept=".pst, .eml, .msg, .mbox" style="width: 100px;height: 25px" />
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-body" ng-show="uploadFrm.importResults!=null">
+
+                    <!--<div ng-repeat="mess in uploadFrm.importResults" >{{mess}}</div>-->
+                    <div style="height: 150px; overflow: scroll;">
+                    <p style="margin-bottom:0px" ng-repeat="mess in uploadFrm.importResults">{{mess}}</p>
+                  </div>
+                  </div>
+                <div class="modal-footer">
+                    <button ng-disabled="!(uploadFrm.file && (uploadFrm.crawlSelected || uploadFrm.label))" type="button" class="btn btn-action" ng-click="onUploadEmailFiles()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- tagger -->
+    <div class="modal fade" id="taggerModal" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="pull-right btn btn-action" data-dismiss="modal" aria-label="Close">
+                        <span class="fa fa-close"></span>
+                    </button>
+                    <h4 class="modal-title">Tagger Document</h4>
+                </div>
+
+                <div class="modal-body" ng-show="uploadFrm.importResults==null">
+
+                    <table width="100%" >
+                        <tr><td><b>Cognitive Space</b></td></tr>
+                        <tr>
+                            <td>
+                                <ol class="nya-bs-select form-control"
+                                    ng-model="uploadFrm.spaceSelectedTagger"
+                                    data-live-search="true"
+                                    title="Select a cognitive space"
+                                    data-size="10" >
+                                    <li nya-bs-option="sp in shared.spaces" >
+                                        <a>
+                                            <span>{{sp.label}}</span>
+                                            <span class="glyphicon glyphicon-ok check-mark"></span>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr><td><b>Select a file (.doc / .pdf)</b></td></tr>
+                        <tr>
+                            <td width="80%" style="padding-left:2px;border:1px solid #c1c1c1;">
+                                <span class="fileupload-preview">{{uploadFrm.fileName | cut:true:60:'...'}}</span>
+                            </td>
+                            <td width="20%" align="right" >
+                                <span class="btn btn-file btn-default">
+                                    <span class="importStatus fa fa-folder-open"></span>
+                                    Browse... <input type="file" file-reader="uploadFrm.fileContent" file-directive="uploadFrm.myFile" accept=".doc, .pdf" style="width: 100px;height: 25px" />
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-body" ng-show="uploadFrm.importResults!=null">
+                    <div ng-repeat="mess in uploadFrm.importResults" >{{mess}}</div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-disabled="!(uploadFrm.file && uploadFrm.spaceSelectedTagger)" type="button" class="btn btn-action" ng-click="onTaggerFile()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

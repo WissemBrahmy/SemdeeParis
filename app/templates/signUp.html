@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="fa fa-2x fa-user"> Sign Up</span>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-7">
+                    <form class="form-horizontal" ng-submit="addUser(user)" name="myForm" novalidate ng-keypress="error=null">
+                    	<p class="blockquote">
+                            <span class="fa fa-info-circle fa-2x blue" ></span> Please enter data for all fields below
+                        </p>
+                        <div class="form-group">
+                            <label for="username" class="col-md-4 control-label">User name : </label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="username" ng-model="user.username" maxlength="25"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-md-4 control-label">First name : </label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="firstname" ng-model="user.firstname" maxlength="25"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="col-md-4 control-label">Last name : </label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="lastname" ng-model="user.lastname" maxlength="25"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-md-4 control-label">Password : </label>
+                            <div class="col-md-4">
+                                <input type="{{pwdInputType}}" class="form-control" id="password" ng-model="user.password" maxlength="25"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rnpassword" class="col-md-4 control-label">Confirm password : </label>
+                            <div class="col-md-4">
+                                <input type="{{pwdInputType}}" class="form-control" id="rnpassword" ng-model="user.rnpassword" maxlength="25"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="seePassword" class="col-md-4 control-label">Show password : </label>
+                            <div class="col-md-4">
+                                <input type="checkbox" id="seePassword" ng-click="togglePwd()" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-action" ng-disabled="!user.username || !user.firstname || !user.lastname || !user.password || !user.rnpassword || (user.password != user.rnpassword)">
+                            <span class="fa fa-save"></span> Save user information
+                        </button>
+                        <a href="#/home"><button type="submit" class="btn btn-action">
+                            <span class="fa fa-close"></span> Cancel
+                        </button></a>
+                        <div>
+                            <p ng-show="error" class="red fa fa-info-circle"> {{error}} </p>
+                            <!--<p ng-show="myForm.email.$error.email" class="red fa fa-info-circle"> Email is not valid </p>-->
+                            <p ng-show="user.password.length < 6" class="red fa fa-info-circle"> Password must be have at least 6 chars</p>
+                            <p ng-show="user.password && user.rnpassword && user.password != user.rnpassword" class="red fa fa-info-circle"> Password is not match</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

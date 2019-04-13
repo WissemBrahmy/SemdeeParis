@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">Monitoring</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    Select a semantic space to work on :
+                    <ol class="nya-bs-select" ng-change="selectedSpace()" ng-model="shared.space" data-live-search="true"
+                        title="Select a semantic space" data-size="10">
+                        <li nya-bs-option="space in shared.spaces">
+                            <a>{{ space.label }}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                        </li>
+                    </ol>
+                    <button ng-show="!isLoading" ng-show="shared.space" type="button" class="btn btn-action" ng-click="launchMonitoring()" ng-disabled="!shared.space">
+                        Launch a new monitoring <span class="fa fa-arrow-right"></span>
+                    </button>
+                </div>
+                <div class="col-md-12" ng-hide="monitorings | isEmpty" style="margin-top:1em;">
+                    <table class="table table-striped table-condensed table-bordered table-hover" >
+                        <thead>
+                        <tr>
+                            <th style="width:4%" class="text-center">#</th>
+                            <th>Creation date
+                                <span style="cursor:pointer" class="fa fa-caret-up pull-right" ng-click="predicate = 'beginDate'; reverse=false"></span>
+                                <span style="cursor:pointer" class="fa fa-caret-down pull-right" ng-click="predicate = 'beginDate'; reverse=true"></span>
+                            </th>
+                            <th style="width:5%">Clusters</th>
+                            <th style="width:5%">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr dir-paginate="monitoring in monitorings | orderBy:predicate:reverse | itemsPerPage : 10"
+                            pagination-id="historyPage" ng-class="{active : activeMonitoring.id == monitoring.id}">
+                            <td ng-click="selectMonitoring(monitoring)" class="text-right">{{monitoring.id}}</td>
+                            <td ng-click="selectMonitoring(monitoring)" >{{monitoring.beginDate | date :'MM-dd-yyyy HH:mm:ss'}}</td>
+                            <td ng-click="selectMonitoring(monitoring)" class="text-right">{{monitoring.nbrclusters}}</td>
+                            <td class="text-center">
+	                            <a title="Delete monitoring" class="btn btn-subaction btn-xs" ng-click="deleteMonitoring(monitoring)">
+		                        	<span class="fa fa-remove"></span>
+		                        </a>
+	                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <dir-pagination-controls pagination-id="historyPage"></dir-pagination-controls>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="monitorings | isEmpty" ng-hide="!shared.space" style="margin-top:1em;">
+                    <div class="alert alert-warning">No monitoring yet! Please launch one.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="activeMonitoring">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">Monitoring {{activeNode.title}}</div>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <p ng-hide="activeCluster" class="blockquote" >
+                        <span class="fa fa-info-circle fa-2x blue"></span>
+                        Click a category on the chart to browse its detailed list of documents
+                    </p>
+                    <chart chart-show-types="true" chart-data="chart.data" chart-title="chart.title" chart-type="chart.type" chart-available-types="donut-chart,bubble-chart"></chart>
+                </div>
+                <div class="col-md-6" >
+                    <div class="panel"  ng-show="activeMonitoring">
+                        <div class="panel-heading">Statistics</div>
+                        <div class="panel-body">
+                            <p>- Total number of documents of SPACE: <b>{{nbDocsOfSpace}}</b></p>
+                            <p>- Total number of documents of CLUSTERING: <b>{{nbDocsOfMonitoring}}</b></p>
+                            <p ng-show="activeCluster" >- Total number of documents of CLUSTER: <b>{{activeCluster.value}}</b></p>
+                            <p ng-show="activeCluster" >- Percentage(%) of documents CLUSTER / CLUSTERING:
+                                <b>{{activeCluster.value}} / {{nbDocsOfMonitoring}} = {{nbDocsOfMonitoring>0? (activeCluster.value*100/nbDocsOfMonitoring|number:2) :0}}%</b>
+                            </p>
+                            <p ng-show="activeCluster" >- Percentage(%) of documents CLUSTER / SPACE:
+                                <b>{{activeCluster.value}} / {{nbDocsOfSpace}} = {{nbDocsOfSpace>0? (activeCluster.value*100/nbDocsOfSpace|number:2) :0}}%</b>
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="panel" ng-show="activeCluster">
+                        <div class="panel-heading">
+                            Documents of {{activeCluster.label}}
+                            <div class="btn-group pull-right" ng-show="!showEditClusterForm">
+                                <a href ng-click="editCluster()" title="Edit cluster name" class="btn btn-action btn-xs"><span class="fa fa-edit"></span></a>
+                            </div>
+                            <span class="input-group col-md-12" ng-show="showEditClusterForm">
+                                <form ng-submit="closeEditClusterForm(1)">
+                                    <input style="display:block;width:75%" ng-model="clusterName" required="required" type="text" class="form-control" placeholder="Enter new cluster name" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-action" type="submit" title="Save new cluster name">
+                                            <span class="fa fa-save"></span>
+                                        </button>
+                                        <button  ng-click="closeEditClusterForm(0)" type="button" class="btn btn-action"
+                                                 title="Cancel"><span class="fa fa-times"></span>
+                                        </button>
+                                    </span>
+                                </form>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <p style="font-weight:bold">
+                                Cluster covered subjects :
+                                <div>
+                                    <span ng-repeat="tag in activeCluster.tags" class="tag btn btn-default btn-xs nohover"><span class="glyphicon glyphicon-tags"></span> {{tag}}</span>
+                                </div>
+                            </p>
+                            <div dir-paginate="doc in documents | itemsPerPage : 20" pagination-id="clusterDocs" current-page="currentPageDocsList">
+                                <div class="doc-bloc">
+                                    <ng-include src="'app/templates/documentDescPartial.html'"></ng-include>
+                                </div>
+                            </div>
+                            <div class="text-center"><dir-pagination-controls pagination-id="clusterDocs"></dir-pagination-controls></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
